@@ -1,0 +1,46 @@
+{
+  "name": "ReLike",
+  "version": "0.0.1",
+  "description": "Universal Like button, powered by Ethereum.",
+  "scripts": {
+    "lint": "eslint ./",
+    "build": "webpack",
+    "dev": "webpack-dev-server"
+  },
+  "author": "Noman",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.2",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.4.0",
+    "babel-preset-es2015": "^6.24.1",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.28.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-babel": "^4.1.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-mocha": "^4.9.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-standard": "^3.0.1",
+    "html-webpack-plugin": "^2.28.0",
+    "json-loader": "^0.5.4",
+    "style-loader": "^0.16.1",
+    "web3": "^0.18.4",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "babel-register": "^6.24.1",
+    "q": "^1.5.0",
+    "truffle-contract": "^2.0.0",
+    "web3": "^0.18.4"
+  }
+}

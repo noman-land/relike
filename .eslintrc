@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "airbnb"
+  ],
+  "globals": {
+    "artifacts": false,
+    "document": false,
+    "window": false
+  },
+  "rules": {
+    "arrow-body-style": [2, "as-needed"],
+    "space-before-function-paren": [2, "never"]
+  }
+}

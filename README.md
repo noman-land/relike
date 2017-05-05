@@ -22,7 +22,7 @@ The `data-entity-id` attribute that is passed will be the entity that is "like"d
  
     Get the mnemonic and in MetaMask, click forget password on the lock screen and paste in your mnemonic. You'll have one account with 100 eth in it. You can create nine more and they will all have 100 eth in them.
  
-    Later you can start your testrpc with the same mnenomic to get the same account that are already imported into MetaMask.
+    Later you can start your testrpc with the same mnenomic to get the same accounts that are already imported into MetaMask.
   
     `testrpc -m="acid put legend otter clump abandon wool praise digital actual ghost trail" --network-id 3172`
    

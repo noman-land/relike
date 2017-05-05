@@ -32,7 +32,7 @@ The `data-entity-id` attribute that is passed will be the entity that is "like"d
 
 ### Pushing gh-pages branch
 
-1. Build your app with updated address for newly deployed (updated) contracts
+1. Build your app with updated addresses for newly deployed (updated) contracts
 
     `npm run build`
 

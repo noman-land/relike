@@ -16179,8 +16179,8 @@ module.exports = {
 				}
 			},
 			"links": {},
-			"address": "0x7d8a0fbbf650bc9f39dfd079b706c33bb3ec02ab",
-			"updated_at": 1493959692719
+			"address": "0xc5390d4972b421c91544e037065eae6e02cd400f",
+			"updated_at": 1493997042936
 		},
 		"1492577389814": {
 			"events": {
@@ -16242,7 +16242,7 @@ module.exports = {
 		}
 	},
 	"schema_version": "0.0.5",
-	"updated_at": 1493959692719
+	"updated_at": 1493997042936
 };
 
 /***/ }),

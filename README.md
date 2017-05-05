@@ -38,4 +38,4 @@ The `data-entity-id` attribute that is passed will be the entity that is "like"d
 
 2. Push just the build folder to gh-pages
 
-    `git subtree push --prefix dist origin gh-pages`
+    `git subtree push --prefix build origin gh-pages`

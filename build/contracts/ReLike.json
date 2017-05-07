@@ -183,97 +183,10 @@
         }
       },
       "links": {},
-      "address": "0x7d8a0fbbf650bc9f39dfd079b706c33bb3ec02ab",
-      "updated_at": 1494025071586
-    },
-    "5199": {
-      "events": {
-        "0xb8ffb20080e4ffaa686f85ccc9cc2ca31096eb9ffc51ba304e226dd96f1b1691": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "name": "user",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "entityId",
-              "type": "string"
-            },
-            {
-              "indexed": false,
-              "name": "rating",
-              "type": "uint8"
-            }
-          ],
-          "name": "ItemLiked",
-          "type": "event"
-        }
-      },
-      "links": {},
-      "address": "0xc5390d4972b421c91544e037065eae6e02cd400f",
-      "updated_at": 1493997042936
-    },
-    "1492577389814": {
-      "events": {
-        "0xb8ffb20080e4ffaa686f85ccc9cc2ca31096eb9ffc51ba304e226dd96f1b1691": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "name": "user",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "entityId",
-              "type": "string"
-            },
-            {
-              "indexed": false,
-              "name": "rating",
-              "type": "uint8"
-            }
-          ],
-          "name": "ItemLiked",
-          "type": "event"
-        }
-      },
-      "links": {},
-      "address": "0xc7426793e784c9a5a5f38453b00649edce727cb2",
-      "updated_at": 1492577404229
-    },
-    "1493954496001": {
-      "events": {
-        "0xb8ffb20080e4ffaa686f85ccc9cc2ca31096eb9ffc51ba304e226dd96f1b1691": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "name": "user",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "entityId",
-              "type": "string"
-            },
-            {
-              "indexed": false,
-              "name": "rating",
-              "type": "uint8"
-            }
-          ],
-          "name": "ItemLiked",
-          "type": "event"
-        }
-      },
-      "links": {},
-      "address": "0xf68f78c49cc34340974c0a6f99bb762fac464414",
-      "updated_at": 1493954695939
+      "address": "0x1fb078aee03341485d78637c80358760b20a7a5b",
+      "updated_at": 1494180157313
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1494025071586
+  "updated_at": 1494180157313
 }

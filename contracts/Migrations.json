@@ -64,28 +64,10 @@
     "3": {
       "events": {},
       "links": {},
-      "address": "0xc5a64724562342a1d27a4640c4605d0839a45a53",
-      "updated_at": 1494025071591
-    },
-    "5199": {
-      "events": {},
-      "links": {},
-      "address": "0xa814631c82712781e49225bcd55c821e0717cfe8",
-      "updated_at": 1493997042941
-    },
-    "1492577389814": {
-      "events": {},
-      "links": {},
-      "address": "0x2bdc0fda95db8c10f58d05c9f3fd4c0c07f7cd36",
-      "updated_at": 1492577404231
-    },
-    "1493954496001": {
-      "events": {},
-      "links": {},
-      "address": "0x68bb9eda3b14c359049e39de0bbdd67b73a6006c",
-      "updated_at": 1493954695944
+      "address": "0x319e7f39e95b77b606a19232271f6e5297c4a0ef",
+      "updated_at": 1494180157312
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1494025071591
+  "updated_at": 1494180157312
 }

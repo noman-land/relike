@@ -30,6 +30,10 @@ The `data-entity-id` attribute that is passed will be the entity that is "like"d
 
     `truffle compile && truffle migrate`
 
+3. This fires up `webpack-dev-server` and will start the app on `localhost:8080` by default
+
+    `npm run dev`
+
 ### Pushing gh-pages branch
 
 1. Build your app with updated addresses for newly deployed (updated) contracts

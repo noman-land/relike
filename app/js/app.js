@@ -8,8 +8,10 @@ import relikeArtifacts from '../../build/contracts/ReLike.json';
 
 import { Ratings, RatingTypes } from './constants';
 
+const defaultConfig = {};
+
 class ReLike {
-  constructor(entityId = null, { button, likeCount, likeText } = {}) {
+  constructor(entityId = null, { button, likeCount, likeText } = defaultConfig) {
     this.button = button;
     this.entityId = entityId;
     this.likeCount = likeCount;

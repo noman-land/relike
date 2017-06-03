@@ -185,8 +185,37 @@
       "links": {},
       "address": "0x1fb078aee03341485d78637c80358760b20a7a5b",
       "updated_at": 1494180157313
+    },
+    "5199": {
+      "events": {
+        "0xb8ffb20080e4ffaa686f85ccc9cc2ca31096eb9ffc51ba304e226dd96f1b1691": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "entityId",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "name": "rating",
+              "type": "uint8"
+            }
+          ],
+          "name": "ItemLiked",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x83e53c1a3f160baf25096af8f0cae3e95861653c",
+      "updated_at": 1496517474725
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1494180157313
+  "updated_at": 1496517474725
 }

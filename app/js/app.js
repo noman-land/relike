@@ -187,7 +187,7 @@ ReLike.init = () => {
     parentNode.appendChild(button);
     clearInterval(interval);
     return new ReLike(entityId, { button, likeText, likeCount });
-  }, 500);
+  }, 100);
 };
 
 ReLike.init();

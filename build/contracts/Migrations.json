@@ -66,8 +66,14 @@
       "links": {},
       "address": "0x319e7f39e95b77b606a19232271f6e5297c4a0ef",
       "updated_at": 1494180157312
+    },
+    "5199": {
+      "events": {},
+      "links": {},
+      "address": "0x116166d4033d46b139e651ff848109a83be3b0d7",
+      "updated_at": 1496517474731
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1494180157312
+  "updated_at": 1496517474731
 }

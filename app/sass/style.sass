@@ -1,8 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800')
+
 // libs
 //@import ../node_modules/normalize.css/normalize
 
-// main
+@import variables/colors
 @import utils/index
+
+*
+  box-sizing: border-box
+
+html
+  @extend .text-black
+  font-family: 'Open Sans', sans-serif
+  font-size: 14px
+  line-height: normal
+
 
 html, body, #relike-application
   height: 100%

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
+import classnames from 'classnames';
 
 import Web3 from 'web3';
 import contract from 'truffle-contract';
@@ -23,9 +24,15 @@ class ReLike extends Component {
 
     window[`ReLike_${Math.random().toString().slice(2)}`] = this;
 
+    this.state = {
+      results: [1, 2, 3, 4],
+      searchInput: '',
+    };
+
     this.dislike = this.dislike.bind(this);
     this.like = this.like.bind(this);
     this.getMyRating = this.getMyRating.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
 
     this.updateButtonOnAccountSwitch();
     this.updateButtonOnLikeEvents();
@@ -56,6 +63,12 @@ class ReLike extends Component {
       return instance.getLikeById
       .call(this.entityId, { from: this.getActiveAccount() })
       .then(([rating]) => rating.toNumber());
+    });
+  }
+
+  handleInputChange({ target: { value } }) {
+    this.setState({
+      searchInput: value,
     });
   }
 
@@ -116,8 +129,35 @@ class ReLike extends Component {
   }
 
   render() {
+    const inputClassNames = classnames([
+      'border-1',
+      'border-grey-lt',
+      'border-radius-2',
+      'border-solid',
+      'outline-none',
+      'p-4',
+      'text-size-8',
+    ]);
     return (
-      <div>hello</div>
+      <div className="flex-column">
+        <h2 className="m-4 text-center">
+          Like anything
+        </h2>
+        <div className="flex-column p-4">
+          <input
+            className={inputClassNames}
+            onChange={this.handleInputChange}
+            value={this.state.searchInput}
+          />
+          <ul className="flex-column p-0 border-solid border-1 border-grey-lt">
+            {this.state.results.map(value => (
+              <li key={value} className="result">
+                {`thing ${value}`}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     );
   }
 }

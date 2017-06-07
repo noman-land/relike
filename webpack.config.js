@@ -15,22 +15,28 @@ module.exports = {
     }]),
   ],
   module: {
-    rules: [
+    loaders: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        loaders: ['style-loader', 'css-loader'],
       },
-    ],
-    loaders: [
-      { test: /\.json$/, use: 'json-loader' },
+      {
+        test: /\.sass$/,
+        loaders: [
+          'style-loader',
+          'css-loader',
+          'autoprefixer-loader?browsers=last 3 versions',
+          'sass-loader?outputStyle=expanded',
+        ],
+      },
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015'],
-          plugins: ['transform-runtime'],
-        },
+        exclude: /node_modules/,
+        loaders: ['babel-loader'],
+      },
+      {
+        test: /\.json$/,
+        loaders: ['json-loader'],
       },
     ],
   },

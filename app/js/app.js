@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import classnames from 'classnames';
-
-import Web3 from 'web3';
 import contract from 'truffle-contract';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import Q from 'q';
+import Web3 from 'web3';
 
 import '../sass/style.sass';
 
@@ -25,7 +25,12 @@ class ReLike extends Component {
     window[`ReLike_${Math.random().toString().slice(2)}`] = this;
 
     this.state = {
-      results: [1, 2, 3, 4],
+      result: {
+        dislikes: 0,
+        entityId: null,
+        likes: 0,
+      },
+      myRating: 0,
       searchInput: '',
     };
 
@@ -33,6 +38,7 @@ class ReLike extends Component {
     this.like = this.like.bind(this);
     this.getMyRating = this.getMyRating.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.updateButtonOnAccountSwitch();
     this.updateButtonOnLikeEvents();
@@ -43,6 +49,14 @@ class ReLike extends Component {
       instance.dislike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
         .catch(() => console.log('** ALREADY DISLIKED **'))
     ));
+  }
+
+  doesDislike(myRating) {
+    return Ratings[myRating] === RatingTypes.DISLIKE;
+  }
+
+  doesLike(myRating) {
+    return Ratings[myRating] === RatingTypes.LIKE;
   }
 
   getActiveAccount() {
@@ -69,6 +83,24 @@ class ReLike extends Component {
   handleInputChange({ target: { value } }) {
     this.setState({
       searchInput: value,
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const { searchInput } = this.state;
+
+    Q.all([
+      this.getMyRating(searchInput),
+      this.getLikeCount(searchInput),
+    ]).spread((myRating, likeCount) => {
+      this.setState({
+        result: { ...likeCount, entityId: searchInput },
+        myRating,
+      }, () => {
+        console.log(this.state);
+      });
     });
   }
 
@@ -138,23 +170,53 @@ class ReLike extends Component {
       'p-4',
       'text-size-8',
     ]);
+
+    const { myRating, result: { dislikes, entityId, likes }, searchInput } = this.state;
+
     return (
       <div className="flex-column">
         <h2 className="m-4 text-center">
           Like anything
         </h2>
         <div className="flex-column p-4">
-          <input
-            className={inputClassNames}
-            onChange={this.handleInputChange}
-            value={this.state.searchInput}
-          />
+          <form className="flex-column" onSubmit={this.handleSubmit}>
+            <input
+              className={inputClassNames}
+              onChange={this.handleInputChange}
+              value={searchInput}
+            />
+          </form>
           <ul className="flex-column p-0 border-solid border-1 border-grey-lt">
-            {this.state.results.map(value => (
-              <li key={value} className="result">
-                {`thing ${value}`}
-              </li>
-            ))}
+            <li key={entityId} className="result">
+              <span>
+                {entityId}
+              </span>
+              <div>
+                <span
+                  className={classnames([
+                    { 'bg-blue-lt': this.doesLike(myRating) },
+                    'border-1',
+                    'border-solid',
+                    'border-blue',
+                    'p-2',
+                  ])}
+                >
+                  {likes}
+                </span>
+                <span
+                  className={classnames([
+                    { 'bg-blue-lt': this.doesDislike(myRating) },
+                    'border-1',
+                    'border-solid',
+                    'border-blue',
+                    'm-2-l',
+                    'p-2',
+                  ])}
+                >
+                  {dislikes}
+                </span>
+              </div>
+            </li>
           </ul>
         </div>
       </div>

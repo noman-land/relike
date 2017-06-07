@@ -23,11 +23,6 @@ class ReLike extends Component {
 
     window[`ReLike_${Math.random().toString().slice(2)}`] = this;
 
-    this.state = {
-      entityId: props.entityId,
-      likeCount: 0,
-    };
-
     this.dislike = this.dislike.bind(this);
     this.like = this.like.bind(this);
     this.getMyRating = this.getMyRating.bind(this);

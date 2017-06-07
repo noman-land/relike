@@ -38,9 +38,9 @@ class ReLike extends Component {
     this.updateButtonOnLikeEvents();
   }
 
-  dislike() {
+  dislike(entityId) {
     return this.ReLikeContract.deployed().then(instance => (
-      instance.dislike(this.entityId, { from: this.getActiveAccount(), gas: 2000000 })
+      instance.dislike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
         .catch(() => console.log('** ALREADY DISLIKED **'))
     ));
   }
@@ -49,19 +49,19 @@ class ReLike extends Component {
     return this.web3.eth.accounts[0];
   }
 
-  getLikeCount() {
+  getLikeCount(entityId) {
     return this.ReLikeContract.deployed().then(instance => (
-      instance.getEntity.call(this.entityId).then(([likes, dislikes]) => ({
+      instance.getEntity.call(entityId).then(([likes, dislikes]) => ({
         dislikes: dislikes.toNumber(),
         likes: likes.toNumber(),
       }))
     ));
   }
 
-  getMyRating() {
+  getMyRating(entityId) {
     return this.ReLikeContract.deployed().then(instance => {
       return instance.getLikeById
-      .call(this.entityId, { from: this.getActiveAccount() })
+      .call(entityId, { from: this.getActiveAccount() })
       .then(([rating]) => rating.toNumber());
     });
   }
@@ -84,9 +84,9 @@ class ReLike extends Component {
     window.web3 = this.web3;
   }
 
-  like() {
+  like(entityId) {
     return this.ReLikeContract.deployed().then(instance => {
-      return instance.like(this.entityId, { from: this.getActiveAccount(), gas: 2000000 })
+      return instance.like(entityId, { from: this.getActiveAccount(), gas: 2000000 })
         .catch(() => console.log('** ALREADY LIKED **'));
     });
   }
@@ -114,16 +114,16 @@ class ReLike extends Component {
     }));
   }
 
-  unDislike() {
+  unDislike(entityId) {
     return this.ReLikeContract.deployed().then(instance => (
-      instance.unDislike(this.entityId, { from: this.getActiveAccount(), gas: 2000000 })
+      instance.unDislike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
         .catch(() => console.log('** NEVER DISLIKED **'))
     ));
   }
 
-  unLike() {
+  unLike(entityId) {
     return this.ReLikeContract.deployed().then(instance => (
-      instance.unLike(this.entityId, { from: this.getActiveAccount(), gas: 2000000 })
+      instance.unLike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
         .catch(() => console.log('** NEVER LIKED **'))
     ));
   }

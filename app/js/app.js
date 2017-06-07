@@ -50,22 +50,13 @@ class ReLike {
 
   dislike() {
     return this.ReLikeContract.deployed().then(instance => (
-      this.getActiveAccount().then(address => (
-        instance.dislike(this.entityId, { from: address, gas: 2000000 })
-          .catch(() => console.log('** ALREADY DISLIKED **'))
-      ))
+      instance.dislike(this.entityId, { from: this.getActiveAccount(), gas: 2000000 })
+        .catch(() => console.log('** ALREADY DISLIKED **'))
     ));
   }
 
   getActiveAccount() {
-    const deferred = Q.defer();
-    this.web3.eth.getCoinbase((error, address) => {
-      if (error) {
-        deferred.reject(error);
-      }
-      deferred.resolve(address);
-    });
-    return deferred.promise;
+    return this.web3.eth.accounts[0];
   }
 
   getLikeCount() {
@@ -78,13 +69,11 @@ class ReLike {
   }
 
   getMyRating() {
-    return this.ReLikeContract.deployed().then(instance => (
-      this.getActiveAccount().then(address => (
-        instance.getLikeById
-          .call(this.entityId, { from: address })
-          .then(([rating]) => rating.toNumber())
-      ))
-    ));
+    return this.ReLikeContract.deployed().then(instance => {
+      return instance.getLikeById
+      .call(this.entityId, { from: this.getActiveAccount() })
+      .then(([rating]) => rating.toNumber());
+    });
   }
 
   initWeb3() {
@@ -100,26 +89,25 @@ class ReLike {
   }
 
   like() {
-    return this.ReLikeContract.deployed().then(instance => (
-      this.getActiveAccount().then(address => (
-        instance.like(this.entityId, { from: address, gas: 2000000 })
-          .catch(() => console.log('** ALREADY LIKED **'))
-      ))
-    ));
+    return this.ReLikeContract.deployed().then(instance => {
+      return instance.like(this.entityId, { from: this.getActiveAccount(), gas: 2000000 })
+        .catch(() => console.log('** ALREADY LIKED **'));
+    });
   }
 
   updateButtonOnAccountSwitch() {
     let lastActiveAccount = null;
-    setInterval(() => {
-      this.getActiveAccount().then((activeAccount) => {
-        if (activeAccount === lastActiveAccount) {
-          return;
-        }
+    let activeAccount = null;
 
-        lastActiveAccount = activeAccount;
-        this.getLikeCount().then(this.updateButtonLikeCount);
-        this.getMyRating().then(this.updateButtonStyle);
-      });
+    setInterval(() => {
+      activeAccount = this.getActiveAccount();
+      if (activeAccount === lastActiveAccount) {
+        return;
+      }
+
+      lastActiveAccount = activeAccount;
+      this.getLikeCount().then(this.updateButtonLikeCount);
+      this.getMyRating().then(this.updateButtonStyle);
     }, 500);
   }
 
@@ -132,19 +120,15 @@ class ReLike {
 
   unDislike() {
     return this.ReLikeContract.deployed().then(instance => (
-      this.getActiveAccount().then(address => (
-        instance.unDislike(this.entityId, { from: address, gas: 2000000 })
-          .catch(() => console.log('** NEVER DISLIKED **'))
-      ))
+      instance.unDislike(this.entityId, { from: this.getActiveAccount(), gas: 2000000 })
+        .catch(() => console.log('** NEVER DISLIKED **'))
     ));
   }
 
   unLike() {
     return this.ReLikeContract.deployed().then(instance => (
-      this.getActiveAccount().then(address => (
-        instance.unLike(this.entityId, { from: address, gas: 2000000 })
-          .catch(() => console.log('** NEVER LIKED **'))
-      ))
+      instance.unLike(this.entityId, { from: this.getActiveAccount(), gas: 2000000 })
+        .catch(() => console.log('** NEVER LIKED **'))
     ));
   }
 

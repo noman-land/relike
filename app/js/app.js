@@ -31,8 +31,6 @@ class ReLike extends Component {
     this.dislike = this.dislike.bind(this);
     this.like = this.like.bind(this);
     this.getMyRating = this.getMyRating.bind(this);
-    this.updateButtonLikeCount = this.updateButtonLikeCount.bind(this);
-    this.updateButtonStyle = this.updateButtonStyle.bind(this);
 
     this.updateButtonOnAccountSwitch();
     this.updateButtonOnLikeEvents();
@@ -122,18 +120,6 @@ class ReLike extends Component {
     ));
   }
 
-  updateButtonLikeCount({ likes }) {
-    this.likeCount.innerText = likes;
-  }
-
-  updateButtonStyle(myRating) {
-    if (Ratings[myRating] === RatingTypes.LIKE) {
-      this.button.classList.add('liked');
-    } else {
-      this.button.classList.remove('liked');
-    }
-  }
-
   render() {
     return (
       <div>hello</div>
@@ -150,25 +136,14 @@ ReLike.defaultProps = {
 };
 
 ReLike.init = () => {
-  const baseName = 'relike--universal-like-button';
   const interval = setInterval(() => {
-    const scriptNode = document.getElementById(`${baseName}--entrypoint`);
-    if (scriptNode === null) return false;
+    const appContainer = document.getElementById('relike-application');
 
-    const { parentNode } = scriptNode;
-    const entityId = scriptNode.getAttribute('data-relike-id');
+    if (appContainer === null) return false;
 
-    const appContainer = document.createElement('div');
-
-    appContainer.id = 'relike-application';
-    parentNode.removeChild(scriptNode);
-    parentNode.appendChild(appContainer);
     clearInterval(interval);
-
-    ReactDOM.render(
-      <ReLike entityId={entityId} />,
-      document.getElementById('relike-application'),
-    );
+    ReactDOM.render(<ReLike />, appContainer);
+    return true;
   }, 100);
 };
 

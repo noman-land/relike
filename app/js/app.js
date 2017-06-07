@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import Web3 from 'web3';
 import contract from 'truffle-contract';
 
-import '../css/app.css';
+import '../sass/style.sass';
 
 import relikeArtifacts from '../../build/contracts/ReLike.json';
 

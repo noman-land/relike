@@ -1,0 +1,100 @@
+@import ../variables/colors
+@import mixins/borders
+
++generateBorderWidthClasses(10)
++generateBorderRadiusClasses(10)
+
+.border
+  &-none
+    border: none
+
+  &-solid
+    border-style: solid
+
+  &-dotted
+    border-style: dotted
+
+  &-dashed
+    border-style: dashed
+
+  &-t
+    &-solid
+    border-top-style: solid
+
+    &-dotted
+      border-top-style: dotted
+
+    &-dashed
+      border-top-style: dashed
+
+  &-r
+    &-solid
+    border-right-style: solid
+
+    &-dotted
+      border-right-style: dotted
+
+    &-dashed
+      border-right-style: dashed
+
+  &-b
+    &-solid
+      border-bottom-style: solid
+
+    &-dotted
+      border-bottom-style: dotted
+
+    &-dashed
+      border-bottom-style: dashed
+
+  &-l
+    &-solid
+      border-left-style: solid
+
+    &-dotted
+      border-left-style: dotted
+
+    &-dashed
+      border-left-style: dashed
+
+  &-blue-lt
+    border-color: $blue-lt
+
+  &-blue
+    border-color: $blue
+
+  &-blue-dk
+    border-color: $blue-dk
+
+  &-green
+    border-color: $green
+
+  &-green-dk
+    border-color: $green-dk
+
+  &-white
+    border-color: $white
+
+  &-white-dk
+    border-color: $white-dk
+
+  &-gray-lt,
+  &-grey-lt
+    border-color: $gray-lt
+
+  &-gray,
+  &-grey
+    border-color: $gray
+
+  &-gray-dk,
+  &-grey-dk
+    border-color: $gray-dk
+
+  &-black
+    border-color: $black
+
+  &-pink
+    border-color: $pink
+
+  &-purple
+    border-color: $purple

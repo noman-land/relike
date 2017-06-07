@@ -1,0 +1,67 @@
+=flexbox-prefixes($rule, $prop)
+  -ms-#{$rule}: $prop
+  -webkit-#{$rule}: $prop
+  #{$rule}: $prop
+
+=flexbox
+  display: -webkit-box
+  display: -moz-box
+  display: -ms-flexbox
+  display: -webkit-flex
+  display: flex
+
+=align-items($prop)
+  @if ($prop == 'flex-end')
+    -ms-flex-item-align: end
+  @if ($prop == 'flex-start')
+    -ms-flex-item-align: start
+  @else
+    -ms-flex-align: $prop
+
+  -webkit-align-items: $prop
+  align-items: $prop
+
+=justify-content($prop)
+  @if ($prop == 'flex-start')
+    -ms-flex-pack: start
+  @if ($prop == 'flex-end')
+    -ms-flex-pack: end
+  @if ($prop == 'space-between')
+    -ms-flex-pack: justify
+  @if ($prop == 'space-around')
+    -ms-flex-pack: distribute
+  @else
+    -ms-flex-pack: $prop
+
+  -webkit-justify-content: $prop
+  justify-content: $prop
+
+=align-self($prop)
+  @if ($prop == 'flex-end')
+    -ms-flex-item-align: end
+  @if ($prop == 'flex-start')
+    -ms-flex-item-align: start
+  @else
+    -ms-flex-item-align: $prop
+
+  -webkit-align-self: $prop
+  align-self: $prop
+
+=flex($prop)
+  -webkit-box-flex: $prop
+  -moz-box-flex:  $prop
+  +flexbox-prefixes(flex, $prop)
+
+=flex-direction($prop)
+  +flexbox-prefixes(flex-direction, $prop)
+
+=generateFlexGrowShrinkClasses($prop)
+  @for $i from 0 through $prop
+    .flex
+      &-grow
+        &-#{$i}
+          flex-grow: $i
+
+      &-shrink
+        &-#{$i}
+          flex-shrink: $i

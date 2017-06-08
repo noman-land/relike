@@ -141,6 +141,29 @@ class ReLike extends Component {
     });
   }
 
+  optimisticLike() {
+    const {
+      result: {
+        likes: currentLikes,
+        dislikes: currentDislikes,
+      },
+      myRating: currentMyRating,
+    } = this.state;
+
+    const newDislikes = this.doesDislike(currentMyRating)
+      ? currentDislikes - 1
+      : currentDislikes;
+
+    this.setState({
+      myRating: 1,
+      result: {
+        ...this.state.result,
+        likes: currentLikes + 1,
+        dislikes: newDislikes,
+      },
+    });
+  }
+
   updateOnAccountSwitch() {
     let lastActiveAccount = null;
     let activeAccount = null;

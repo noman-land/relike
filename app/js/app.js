@@ -125,9 +125,11 @@ class ReLike extends Component {
   }
 
   like(entityId) {
+    console.info('Liking', entityId);
+
     return this.ReLikeContract.deployed().then(instance => {
       return instance.like(entityId, { from: this.getActiveAccount(), gas: 2000000 })
-        .catch(() => console.log('** ALREADY LIKED **'));
+        .catch(error => console.error('Liking failed:', error));
     });
   }
 

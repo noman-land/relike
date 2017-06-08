@@ -25,6 +25,7 @@ class ReLike extends Component {
     window[`ReLike_${Math.random().toString().slice(2)}`] = this;
 
     this.state = {
+      accountLoading: true,
       result: {
         dislikes: 0,
         entityId: null,
@@ -60,7 +61,15 @@ class ReLike extends Component {
   }
 
   getActiveAccount() {
-    return this.web3.eth.accounts[0];
+    const activeAccount = this.web3.eth.accounts[0];
+
+    if (!activeAccount) {
+      this.setState({ accountLoading: true });
+    } else {
+      this.setState({ accountLoading: false });
+    }
+
+    return activeAccount;
   }
 
   getLikeCount(entityId) {

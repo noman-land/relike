@@ -112,14 +112,12 @@ class ReLike extends Component {
     });
   }
 
-  initWeb3() {
+  initWeb3(fallback) {
     if (typeof window.web3 !== 'undefined') {
-      console.warn("Using web3 detected from external source. If you find that your accounts don't appear or you have 0 MetaCoin, ensure you've configured that source properly. If using MetaMask, see the following link. Feel free to delete this warning. :) http://truffleframework.com/tutorials/truffle-and-metamask");
+      console.warn('Using web3 detected from external source.');
       this.web3 = new Web3(window.web3.currentProvider);
-    } else {
-      console.warn("No web3 detected. Falling back to http://localhost:8545. You should remove this fallback when you deploy live, as it's inherently insecure. Consider switching to Metamask for development. More info here: http://truffleframework.com/tutorials/truffle-and-metamask");
-      // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-      // this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    } else if (typeof fallback === 'function') {
+      fallback();
     }
     window.web3 = this.web3;
   }

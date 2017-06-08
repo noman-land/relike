@@ -108,8 +108,6 @@ class ReLike extends Component {
       this.setState({
         result: { ...likeCount, entityId: searchInput },
         myRating,
-      }, () => {
-        console.log(this.state);
       });
     });
   }

@@ -40,9 +40,8 @@ class ReLike extends Component {
     this.getMyRating = this.getMyRating.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
-    this.updateButtonOnAccountSwitch();
-    this.updateButtonOnLikeEvents();
+    this.updateOnAccountSwitch();
+    this.updateOnLikeEvents();
   }
 
   dislike(entityId) {
@@ -129,7 +128,7 @@ class ReLike extends Component {
     });
   }
 
-  updateButtonOnAccountSwitch() {
+  updateOnAccountSwitch() {
     let lastActiveAccount = null;
     let activeAccount = null;
 
@@ -145,7 +144,7 @@ class ReLike extends Component {
     }, 500);
   }
 
-  updateButtonOnLikeEvents() {
+  updateOnLikeEvents() {
     return this.ReLikeContract.deployed().then(instance => instance.ItemLiked(() => {
       this.getLikeCount().then(this.updateButtonLikeCount);
       this.getMyRating().then(this.updateButtonStyle);

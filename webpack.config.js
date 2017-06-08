@@ -15,14 +15,15 @@ module.exports = {
     }]),
   ],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.css$/,
-        loaders: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.sass$/,
-        loaders: [
+        test: /\.(sass|scss)$/,
+        exclude: /vendor/,
+        use: [
           'style-loader',
           'css-loader',
           'autoprefixer-loader?browsers=last 3 versions',
@@ -32,11 +33,20 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['babel-loader'],
+        use: ['babel-loader'],
       },
       {
         test: /\.json$/,
-        loaders: ['json-loader'],
+        use: ['json-loader'],
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: 'url-loader?limit=10000&mimetype=application/font-woff',
+      },
+
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: 'file-loader',
       },
     ],
   },

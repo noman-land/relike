@@ -29,7 +29,7 @@ class ReLike extends Component {
       myRating: 0,
       result: {
         dislikes: 0,
-        entityId: null,
+        entityId: 'ReLike',
         likes: 0,
       },
       searchInput: '',

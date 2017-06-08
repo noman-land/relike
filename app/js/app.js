@@ -26,12 +26,12 @@ class ReLike extends Component {
 
     this.state = {
       accountLoading: true,
+      myRating: 0,
       result: {
         dislikes: 0,
         entityId: null,
         likes: 0,
       },
-      myRating: 0,
       searchInput: '',
     };
 

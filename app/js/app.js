@@ -46,10 +46,11 @@ class ReLike extends Component {
   }
 
   dislike(entityId) {
-    return this.ReLikeContract.deployed().then(instance => (
-      instance.dislike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
-        .catch(() => console.log('** ALREADY DISLIKED **'))
-    ));
+    console.log('Disliking', entityId);
+    return this.ReLikeContract.deployed().then(instance => {
+      return instance.dislike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
+        .catch(error => console.error('Disliking failed:', error));
+    });
   }
 
   doesDislike(myRating) {
@@ -156,17 +157,19 @@ class ReLike extends Component {
   }
 
   unDislike(entityId) {
-    return this.ReLikeContract.deployed().then(instance => (
-      instance.unDislike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
-        .catch(() => console.log('** NEVER DISLIKED **'))
-    ));
+    console.info('Undisliking', entityId);
+    return this.ReLikeContract.deployed().then(instance => {
+      return instance.unDislike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
+        .catch(error => console.error('Undisliking failed:', error));
+    });
   }
 
   unLike(entityId) {
-    return this.ReLikeContract.deployed().then(instance => (
-      instance.unLike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
-        .catch(() => console.log('** NEVER LIKED **'))
-    ));
+    console.info('Unliking', entityId);
+    return this.ReLikeContract.deployed().then(instance => {
+      return instance.unLike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
+        .catch(error => console.error('Unliking failed:', error));
+    });
   }
 
   render() {

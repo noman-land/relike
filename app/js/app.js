@@ -36,6 +36,8 @@ class ReLike extends Component {
     };
 
     this.dislike = this.dislike.bind(this);
+    this.getActiveAccount = this.getActiveAccount.bind(this);
+    this.getLikeCount = this.getLikeCount.bind(this);
     this.getMyRating = this.getMyRating.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -134,22 +136,44 @@ class ReLike extends Component {
     let activeAccount = null;
 
     setInterval(() => {
+      const { result: { entityId } } = this.state;
+
       activeAccount = this.getActiveAccount();
+
       if (activeAccount === lastActiveAccount) {
         return;
       }
 
+      console.info('Account switched to', activeAccount);
+
       lastActiveAccount = activeAccount;
-      this.getLikeCount().then(this.updateButtonLikeCount);
-      this.getMyRating().then(this.updateButtonStyle);
+      this.getLikeCount(entityId).then(this.updateLikeCount);
+      this.getMyRating(entityId).then(this.updateMyRating);
     }, 500);
   }
 
   updateOnLikeEvents() {
     return this.ReLikeContract.deployed().then(instance => instance.ItemLiked(() => {
-      this.getLikeCount().then(this.updateButtonLikeCount);
-      this.getMyRating().then(this.updateButtonStyle);
+      console.info('Saw a like event, updating...');
+      const { result: { entityId } } = this.state;
+      this.getLikeCount(entityId).then(this.updateLikeCount);
+      this.getMyRating(entityId).then(this.updateMyRating);
     }));
+  }
+
+  updateLikeCount({ dislikes, likes }) {
+    console.info('Updating like count', likes, dislikes);
+    this.setState({
+      result: {
+        ...this.state.result,
+        dislikes,
+        likes,
+      },
+    });
+  }
+
+  updateMyRating(myRating) {
+    this.setState({ myRating });
   }
 
   unDislike(entityId) {

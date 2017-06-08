@@ -36,10 +36,11 @@ class ReLike extends Component {
     };
 
     this.dislike = this.dislike.bind(this);
-    this.like = this.like.bind(this);
     this.getMyRating = this.getMyRating.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.like = this.like.bind(this);
+
     this.updateOnAccountSwitch();
     this.updateOnLikeEvents();
   }

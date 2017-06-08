@@ -212,7 +212,7 @@ class ReLike extends Component {
         <h2 className="m-4 text-center">
           Like anything
         </h2>
-        <div className="flex-column p-4">
+        <div className="flex-column p-4-x p-4-b p-0-t">
           <form className="flex-column" onSubmit={this.handleSubmit}>
             <input
               className={inputClassNames}

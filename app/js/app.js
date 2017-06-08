@@ -1,6 +1,6 @@
+
 import classnames from 'classnames';
 import contract from 'truffle-contract';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Q from 'q';
@@ -223,14 +223,6 @@ class ReLike extends Component {
     );
   }
 }
-
-ReLike.propTypes = {
-  entityId: PropTypes.string,
-};
-
-ReLike.defaultProps = {
-  entityId: null,
-};
 
 ReLike.init = () => {
   const interval = setInterval(() => {

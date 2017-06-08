@@ -10,6 +10,8 @@ import '../sass/style.sass';
 
 import relikeArtifacts from '../../build/contracts/ReLike.json';
 
+import Thumb from './components/Thumb';
+
 import { Ratings, RatingTypes } from './constants';
 
 class ReLike extends Component {
@@ -213,6 +215,14 @@ class ReLike extends Component {
 
     const { myRating, result: { dislikes, entityId, likes }, searchInput } = this.state;
 
+    const handleLikeClick = this.doesLike(myRating)
+      ? () => this.unLike(entityId)
+      : () => this.like(entityId);
+
+    const handleDislikeClick = this.doesDislike(myRating)
+      ? () => this.unDislike(entityId)
+      : () => this.dislike(entityId);
+
     return (
       <div className="flex-column">
         <h2 className="m-4 text-center">
@@ -231,30 +241,25 @@ class ReLike extends Component {
               <span>
                 {entityId}
               </span>
-              <div>
-                <span
-                  className={classnames([
-                    { 'bg-blue-lt': this.doesLike(myRating) },
-                    'border-1',
-                    'border-solid',
-                    'border-blue',
-                    'p-2',
-                  ])}
-                >
-                  {likes}
-                </span>
-                <span
-                  className={classnames([
-                    { 'bg-blue-lt': this.doesDislike(myRating) },
-                    'border-1',
-                    'border-solid',
-                    'border-blue',
-                    'm-2-l',
-                    'p-2',
-                  ])}
-                >
-                  {dislikes}
-                </span>
+              <div className="flex justify-space-between p-4">
+                <Thumb
+                  active={Ratings[myRating] === RatingTypes.LIKE}
+                  count={likes}
+                  direction={'up'}
+                  filled={false}
+                  onClick={handleLikeClick}
+                  textSize={8}
+                  thumbSize={14}
+                />
+                <Thumb
+                  active={Ratings[myRating] === RatingTypes.DISLIKE}
+                  count={dislikes}
+                  direction={'down'}
+                  filled={false}
+                  onClick={handleDislikeClick}
+                  textSize={8}
+                  thumbSize={14}
+                />
               </div>
             </li>
           </ul>

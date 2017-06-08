@@ -22,7 +22,6 @@ module.exports = {
       },
       {
         test: /\.(sass|scss)$/,
-        exclude: /vendor/,
         use: [
           'style-loader',
           'css-loader',

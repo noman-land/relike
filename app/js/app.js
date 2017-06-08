@@ -16,10 +16,10 @@ class ReLike extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.ReLikeContract = contract(relikeArtifacts);
     this.web3 = null;
-
     this.initWeb3();
+
+    this.ReLikeContract = contract(relikeArtifacts);
     this.ReLikeContract.setProvider(this.web3.currentProvider);
 
     window[`ReLike_${Math.random().toString().slice(2)}`] = this;

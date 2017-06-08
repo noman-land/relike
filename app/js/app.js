@@ -42,6 +42,12 @@ class ReLike extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.like = this.like.bind(this);
+    this.unDislike = this.unDislike.bind(this);
+    this.unLike = this.unLike.bind(this);
+    this.updateLikeCount = this.updateLikeCount.bind(this);
+    this.updateMyRating = this.updateMyRating.bind(this);
+    this.updateOnAccountSwitch = this.updateOnAccountSwitch.bind(this);
+    this.updateOnLikeEvents = this.updateOnLikeEvents.bind(this);
 
     this.updateOnAccountSwitch();
     this.updateOnLikeEvents();

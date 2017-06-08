@@ -1,0 +1,41 @@
+=generateBorderWidthClasses($prop)
+  @for $i from 0 through $prop
+    .border
+      &-#{$i}
+        border-width: $i * 1px
+
+        &-y,
+        &-t
+          border-top-width: $i * 1px
+
+        &-y,
+        &-b
+          border-bottom-width: $i * 1px
+
+        &-x,
+        &-l
+          border-left-width: $i * 1px
+
+        &-x,
+        &-r
+          border-right-width: $i * 1px
+
+=generateBorderRadiusClasses($prop)
+  @for $i from 0 through $prop
+    .border-radius
+      &-#{$i}
+        border-radius: $i * 1px
+
+        &-t
+          &-l
+            border-top-left-radius: $i * 1px
+
+          &-r
+            border-top-right-radius: $i * 1px
+
+        &-b
+          &-l
+            border-bottom-left-radius: $i * 1px
+
+          &-r
+            border-bottom-right-radius: $i * 1px

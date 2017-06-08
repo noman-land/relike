@@ -1,0 +1,93 @@
+@import mixins/flexbox
+
+.flex
+  +flexbox
+
+.flex
+  &-row
+    @extend .flex
+    +flex-direction(row)
+
+  &-column
+    @extend .flex
+    +flex-direction(column)
+
+  @for $i from 0 through 12
+    &-grow
+      &-#{$i}
+        flex-grow: $i
+
+    &-shrink
+      &-#{$i}
+        flex-shrink: $i
+
+
+.justify
+  &-start
+    +justify-content(flex-start)
+
+  &-end
+    +justify-content(flex-start)
+
+  &-center
+    +justify-content(center)
+
+  &-space
+    &-between
+      +justify-content(space-between)
+
+    &-around
+      +justify-content(space-around)
+
+.align
+  &-items
+    &-start
+      +align-items(flex-start)
+
+    &-end
+      +align-items(flex-end)
+
+    &-center
+      +align-items(center)
+
+    &-baseline
+      +align-items(baseline)
+
+    &-stretch
+      +align-items(stretch)
+
+  &-self
+    &-start
+      +align-self(flex-start)
+
+    &-end
+      +align-self(flex-end)
+
+    &-center
+      +align-self(center)
+
+    &-baseline
+      +align-self(baseline)
+
+    &-stretch
+      +align-self(stretch)
+
+  &-content
+    &-start
+      align-content: flex-start
+
+    &-end
+      align-content: flex-end
+
+    &-center
+      align-content: center
+
+    &-stretch
+      align-content: stretch
+
+    &-space
+      &-around
+        align-content: space-around
+
+      &-between
+        align-content: space-between

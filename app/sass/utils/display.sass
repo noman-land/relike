@@ -1,0 +1,28 @@
+@import mixins/opacity
+
+.display
+  &-block
+    display: block
+
+  &-none
+    display: none
+
+  &-inline
+    display: inline
+
+  &-inline-block
+    display: inline-block
+
+  &-table-header-group
+    display: table-header-group
+
+  &-table-row
+    display: table-row
+
+  &-table-cell
+    display: table-cell
+
+.hidden
+  visibility: hidden
+
++generateOpacityClasses(10)

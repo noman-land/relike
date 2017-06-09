@@ -10,7 +10,7 @@ import '../sass/style.sass';
 
 import relikeArtifacts from '../../build/contracts/ReLike.json';
 
-import Thumb from './components/Thumb';
+import LikeCard from './components/LikeCard';
 
 import { Ratings, RatingTypes } from './constants';
 
@@ -282,33 +282,16 @@ class ReLike extends Component {
               value={searchInput}
             />
           </form>
-          <ul className="flex-column p-0 border-solid border-1 border-grey-lt">
-            <li key={entityId} className="result">
-              <span>
-                {entityId}
-              </span>
-              <div className="flex justify-space-between p-4">
-                <Thumb
-                  active={Ratings[myRating] === RatingTypes.LIKE}
-                  count={likes}
-                  direction={'up'}
-                  filled={false}
-                  onClick={handleLikeClick}
-                  textSize={8}
-                  thumbSize={14}
-                />
-                <Thumb
-                  active={Ratings[myRating] === RatingTypes.DISLIKE}
-                  count={dislikes}
-                  direction={'down'}
-                  filled={false}
-                  onClick={handleDislikeClick}
-                  textSize={8}
-                  thumbSize={14}
-                />
-              </div>
-            </li>
-          </ul>
+          {entityId && (
+            <LikeCard
+              dislikes={dislikes}
+              entityId={entityId}
+              likes={likes}
+              myRating={myRating}
+              onDislikeClick={handleDislikeClick}
+              onLikeClick={handleLikeClick}
+            />
+          )}
         </div>
       </div>
     );

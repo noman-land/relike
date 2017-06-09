@@ -1,5 +1,6 @@
 import classnames from 'classnames';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 const inputClassNames = classnames([
   'border-1',

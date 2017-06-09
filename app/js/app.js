@@ -1,5 +1,3 @@
-
-import classnames from 'classnames';
 import contract from 'truffle-contract';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
@@ -11,6 +9,7 @@ import '../sass/style.sass';
 import relikeArtifacts from '../../build/contracts/ReLike.json';
 
 import LikeCard from './components/LikeCard';
+import SearchBar from './components/SearchBar';
 
 import { Ratings, RatingTypes } from './constants';
 
@@ -249,16 +248,6 @@ class ReLike extends Component {
   }
 
   render() {
-    const inputClassNames = classnames([
-      'border-1',
-      'border-grey-lt',
-      'border-radius-2',
-      'border-solid',
-      'outline-none',
-      'p-4',
-      'text-size-8',
-    ]);
-
     const { myRating, result: { dislikes, entityId, likes }, searchInput } = this.state;
 
     const handleLikeClick = this.doesLike(myRating)
@@ -275,13 +264,11 @@ class ReLike extends Component {
           Like anything
         </h2>
         <div className="flex-column p-4-x p-4-b p-0-t">
-          <form className="flex-column" onSubmit={this.handleSubmit}>
-            <input
-              className={inputClassNames}
-              onChange={this.handleInputChange}
-              value={searchInput}
-            />
-          </form>
+          <SearchBar
+            searchInput={searchInput}
+            onInputChange={this.handleInputChange}
+            onSubmit={this.handleSubmit}
+          />
           {entityId && (
             <LikeCard
               dislikes={dislikes}

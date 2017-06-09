@@ -15,9 +15,9 @@ const LikeCard = ({
 }) => (
   <div className="flex-column p-0 border-solid border-1 border-radius-2 border-grey-lt m-4-t">
     <div key={entityId} className="result">
-      <h3 className="text-center ellipsis">
+      <span className="text-center ellipsis text-size-12 p-8-y">
         {entityId}
-      </h3>
+      </span>
       <div className="flex flex-grow-1 justify-space-between p-4">
         <Thumb
           active={Ratings[myRating] === RatingTypes.LIKE}

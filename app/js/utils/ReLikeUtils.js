@@ -101,9 +101,10 @@ export default class ReLikeUtils {
   }
 
   updateOnLikeEvents(callback) {
-    this.ReLikeContract.deployed().then(instance => instance.ItemLiked(() => {
-      console.info('Saw a like event');
-      callback();
+    this.ReLikeContract.deployed().then(instance => instance.ItemLiked((error, result) => {
+      const { args: { entityId } } = result;
+      console.info('Saw a like event for:', entityId);
+      callback(entityId);
     }));
   }
 

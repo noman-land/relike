@@ -10,6 +10,7 @@ export default class Thumb extends Component {
       direction: PropTypes.oneOf(['up', 'down']).isRequired,
       filled: PropTypes.bool.isRequired,
       onClick: PropTypes.func.isRequired,
+      pending: PropTypes.bool.isRequired,
       textSize: PropTypes.number.isRequired,
       thumbSize: PropTypes.number.isRequired,
     };
@@ -17,15 +18,19 @@ export default class Thumb extends Component {
 
   constructor(props, context) {
     super(props, context);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick() {
-    this.props.onClick();
   }
 
   render() {
-    const { active, count, direction, filled, textSize, thumbSize } = this.props;
+    const {
+      active,
+      count,
+      direction,
+      filled,
+      onClick,
+      pending,
+      textSize,
+      thumbSize,
+    } = this.props;
 
     const containerClasses = classnames([
       'align-items-center',
@@ -41,12 +46,13 @@ export default class Thumb extends Component {
     const thumbClasses = classnames([
       'fa',
       `fa-thumbs${filledClass}-${direction}`,
+      { 'loading-pulsate': pending },
       { 'text-blue': active },
     ]);
 
     return (
       <div className={containerClasses}>
-        <i aria-hidden="true" className={thumbClasses} onClick={this.handleClick} />
+        <i aria-hidden="true" className={thumbClasses} onClick={onClick} />
         <span className={`text-size-${textSize} m-4-l`}>
           {count}
         </span>

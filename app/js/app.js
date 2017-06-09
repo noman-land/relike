@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import { Map } from 'immutable';
+
 import '../sass/style.sass';
 
 import LikeCard from './components/LikeCard';
@@ -19,6 +21,7 @@ class ReLike extends Component {
       accountLoading: true,
       activeAccount: null,
       myRating: 0,
+      pendingLikes: Map(),
       result: {
         dislikes: 0,
         entityId: 'ReLike',
@@ -29,6 +32,8 @@ class ReLike extends Component {
 
     this.fetchDataAndUpdateCard = this.fetchDataAndUpdateCard.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleDislikeClick = this.handleDislikeClick.bind(this);
+    this.handleLikeClick = this.handleLikeClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onAccountSwitch = this.onAccountSwitch.bind(this);
     this.onLikeEvent = this.onLikeEvent.bind(this);
@@ -46,8 +51,12 @@ class ReLike extends Component {
     this.fetchDataAndUpdateCard(this.state.result.entityId);
   }
 
-  onLikeEvent() {
-    this.fetchDataAndUpdateCard(this.state.result.entityId);
+  onLikeEvent(entityId) {
+    const { result: { entityId: currentEntityId }, pendingLikes } = this.state;
+    this.setState({ pendingLikes: pendingLikes.delete(entityId) });
+    if (entityId === currentEntityId) {
+      this.fetchDataAndUpdateCard(entityId);
+    }
   }
 
   fetchDataAndUpdateCard(entityId) {
@@ -59,6 +68,38 @@ class ReLike extends Component {
     this.setState({
       searchInput: value,
     });
+  }
+
+  handleDislikeClick() {
+    const { myRating, pendingLikes, result: { entityId } } = this.state;
+
+    if (doesDislike(myRating)) {
+      this.setState({
+        pendingLikes: pendingLikes.setIn([entityId, 'unDislike'], true),
+      });
+      this.reLikeUtils.unDislike(entityId);
+    } else {
+      this.setState({
+        pendingLikes: pendingLikes.setIn([entityId, 'dislike'], true),
+      });
+      this.reLikeUtils.dislike(entityId);
+    }
+  }
+
+  handleLikeClick() {
+    const { myRating, pendingLikes, result: { entityId } } = this.state;
+
+    if (doesLike(myRating)) {
+      this.setState({
+        pendingLikes: pendingLikes.setIn([entityId, 'unLike'], true),
+      });
+      this.reLikeUtils.unLike(entityId);
+    } else {
+      this.setState({
+        pendingLikes: pendingLikes.setIn([entityId, 'like'], true),
+      });
+      this.reLikeUtils.like(entityId);
+    }
   }
 
   handleSubmit(event) {
@@ -114,14 +155,6 @@ class ReLike extends Component {
   render() {
     const { myRating, result: { dislikes, entityId, likes }, searchInput } = this.state;
 
-    const handleLikeClick = doesLike(myRating)
-      ? () => this.reLikeUtils.unLike(entityId)
-      : () => this.reLikeUtils.like(entityId);
-
-    const handleDislikeClick = doesDislike(myRating)
-      ? () => this.reLikeUtils.unDislike(entityId)
-      : () => this.reLikeUtils.dislike(entityId);
-
     return (
       <div className="flex-column">
         <h2 className="m-4 text-center">
@@ -139,8 +172,9 @@ class ReLike extends Component {
               entityId={entityId}
               likes={likes}
               myRating={myRating}
-              onDislikeClick={handleDislikeClick}
-              onLikeClick={handleLikeClick}
+              onDislikeClick={this.handleDislikeClick}
+              onLikeClick={this.handleLikeClick}
+              pendingLikes={this.state.pendingLikes}
             />
           )}
         </div>

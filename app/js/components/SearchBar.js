@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 
 const inputClassNames = classnames([
   'border-1',
@@ -12,20 +12,36 @@ const inputClassNames = classnames([
   'text-size-7',
 ]);
 
-const SearchBar = ({ searchInput, onInputChange, onSubmit }) => (
-  <form className="flex-column" onSubmit={onSubmit}>
-    <input
-      className={inputClassNames}
-      onChange={onInputChange}
-      value={searchInput}
-    />
-  </form>
-);
+export default class SearchBar extends Component {
+  static get propTypes() {
+    return {
+      searchInput: PropTypes.string.isRequired,
+      onInputChange: PropTypes.func.isRequired,
+      onSubmit: PropTypes.func.isRequired,
+    };
+  }
 
-SearchBar.propTypes = {
-  searchInput: PropTypes.string.isRequired,
-  onInputChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
+  constructor(props, context) {
+    super(props, context);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-export default SearchBar;
+  handleSubmit(event) {
+    this.props.onSubmit(event);
+    this.input.blur();
+  }
+
+  render() {
+    const { searchInput, onInputChange } = this.props;
+    return (
+      <form className="flex-column" onSubmit={this.handleSubmit}>
+        <input
+          className={inputClassNames}
+          ref={input => { this.input = input; }}
+          onChange={onInputChange}
+          value={searchInput}
+        />
+      </form>
+    );
+  }
+}

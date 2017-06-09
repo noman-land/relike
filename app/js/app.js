@@ -14,6 +14,13 @@ import Thumb from './components/Thumb';
 
 import { Ratings, RatingTypes } from './constants';
 
+import loggingUtils from './utils/loggingUtils';
+
+const {
+  logActiveAccountError,
+  logError,
+} = loggingUtils;
+
 class ReLike extends Component {
   constructor(props, context) {
     super(props, context);

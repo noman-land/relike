@@ -1,39 +1,23 @@
-import contract from 'truffle-contract';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Q from 'q';
-import Web3 from 'web3';
 
 import '../sass/style.sass';
-
-import relikeArtifacts from '../../build/contracts/ReLike.json';
 
 import LikeCard from './components/LikeCard';
 import SearchBar from './components/SearchBar';
 
-import { Ratings, RatingTypes } from './constants';
-
-import loggingUtils from './utils/loggingUtils';
-
-const {
-  logActiveAccountError,
-  logError,
-} = loggingUtils;
+import { doesDislike, doesLike } from './utils/likingUtils';
+import ReLikeUtils from './utils/ReLikeUtils';
 
 class ReLike extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.web3 = null;
-    this.initWeb3();
-
-    this.ReLikeContract = contract(relikeArtifacts);
-    this.ReLikeContract.setProvider(this.web3.currentProvider);
-
-    window[`ReLike_${Math.random().toString().slice(2)}`] = this;
+    window.ReLike = this;
 
     this.state = {
       accountLoading: true,
+      activeAccount: null,
       myRating: 0,
       result: {
         dislikes: 0,
@@ -43,78 +27,32 @@ class ReLike extends Component {
       searchInput: '',
     };
 
-    this.dislike = this.dislike.bind(this);
-    this.getActiveAccount = this.getActiveAccount.bind(this);
-    this.getLikeCount = this.getLikeCount.bind(this);
-    this.getMyRating = this.getMyRating.bind(this);
+    this.fetchDataAndUpdateCard = this.fetchDataAndUpdateCard.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.like = this.like.bind(this);
-    this.unDislike = this.unDislike.bind(this);
-    this.unLike = this.unLike.bind(this);
+    this.onAccountSwitch = this.onAccountSwitch.bind(this);
+    this.onLikeEvent = this.onLikeEvent.bind(this);
     this.updateLikeCount = this.updateLikeCount.bind(this);
     this.updateMyRating = this.updateMyRating.bind(this);
-    this.updateOnAccountSwitch = this.updateOnAccountSwitch.bind(this);
-    this.updateOnLikeEvents = this.updateOnLikeEvents.bind(this);
 
-    this.updateOnAccountSwitch();
-    this.updateOnLikeEvents();
-  }
-
-  dislike(entityId) {
-    console.log('Disliking', entityId);
-    return this.ReLikeContract.deployed().then(instance => {
-      return this.getActiveAccount().then(activeAccount => {
-        return instance.dislike(entityId, { from: activeAccount, gas: 2000000 })
-          .catch(logError('Disliking failed'));
-      }).catch(logActiveAccountError);
+    this.reLikeUtils = new ReLikeUtils({
+      onAccountSwitch: this.onAccountSwitch,
+      onLikeEvent: this.onLikeEvent,
     });
   }
 
-  doesDislike(myRating) {
-    return Ratings[myRating] === RatingTypes.DISLIKE;
+  onAccountSwitch(activeAccount) {
+    this.setState({ activeAccount });
+    this.fetchDataAndUpdateCard(this.state.result.entityId);
   }
 
-  doesLike(myRating) {
-    return Ratings[myRating] === RatingTypes.LIKE;
+  onLikeEvent() {
+    this.fetchDataAndUpdateCard(this.state.result.entityId);
   }
 
-  getActiveAccount() {
-    const deferred = Q.defer();
-
-    this.web3.eth.getAccounts((error, accounts) => {
-      this.setState({ accountLoading: false });
-
-      if (error) {
-        deferred.reject(error);
-        return false;
-      }
-
-      deferred.resolve(accounts[0]);
-      return true;
-    });
-
-    return deferred.promise;
-  }
-
-  getLikeCount(entityId) {
-    return this.ReLikeContract.deployed().then(instance => (
-      instance.getEntity.call(entityId).then(([likes, dislikes]) => ({
-        dislikes: dislikes.toNumber(),
-        likes: likes.toNumber(),
-      }))
-    ));
-  }
-
-  getMyRating(entityId) {
-    return this.ReLikeContract.deployed().then(instance => {
-      return this.getActiveAccount().then(activeAccount => {
-        return instance.getLikeById
-          .call(entityId, { from: activeAccount })
-          .then(([rating]) => rating.toNumber())
-          .catch(logError('Getting rating failed'));
-      }).catch(logActiveAccountError);
-    });
+  fetchDataAndUpdateCard(entityId) {
+    this.reLikeUtils.getLikeCount(entityId).then(this.updateLikeCount);
+    this.reLikeUtils.getMyRating(entityId).then(this.updateMyRating);
   }
 
   handleInputChange({ target: { value } }) {
@@ -125,39 +63,14 @@ class ReLike extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    const { searchInput } = this.state;
-
-    Q.all([
-      this.getMyRating(searchInput),
-      this.getLikeCount(searchInput),
-    ]).spread((myRating, likeCount) => {
-      this.setState({
-        result: { ...likeCount, entityId: searchInput },
-        myRating,
-      });
+    this.setState({
+      result: {
+        ...this.state.result,
+        entityId: this.state.searchInput,
+      },
     });
-  }
 
-  initWeb3(fallback) {
-    if (typeof window.web3 !== 'undefined') {
-      console.warn('Using web3 detected from external source.');
-      this.web3 = new Web3(window.web3.currentProvider);
-    } else if (typeof fallback === 'function') {
-      fallback();
-    }
-    window.web3 = this.web3;
-  }
-
-  like(entityId) {
-    console.info('Liking', entityId);
-
-    return this.ReLikeContract.deployed().then(instance => {
-      return this.getActiveAccount().then(activeAccount => {
-        return instance.like(entityId, { from: activeAccount, gas: 2000000 })
-          .catch(logError('Liking failed'));
-      }).catch(logActiveAccountError);
-    });
+    this.fetchDataAndUpdateCard(this.state.searchInput);
   }
 
   optimisticLike() {
@@ -169,7 +82,7 @@ class ReLike extends Component {
       myRating: currentMyRating,
     } = this.state;
 
-    const newDislikes = this.doesDislike(currentMyRating)
+    const newDislikes = doesDislike(currentMyRating)
       ? currentDislikes - 1
       : currentDislikes;
 
@@ -181,35 +94,6 @@ class ReLike extends Component {
         dislikes: newDislikes,
       },
     });
-  }
-
-  updateOnAccountSwitch() {
-    let lastActiveAccount = null;
-
-    setInterval(() => {
-      const { result: { entityId } } = this.state;
-
-      this.getActiveAccount().then(activeAccount => {
-        if (activeAccount === lastActiveAccount) {
-          return;
-        }
-
-        console.info('Account switched to', activeAccount);
-
-        lastActiveAccount = activeAccount;
-        this.getLikeCount(entityId).then(this.updateLikeCount);
-        this.getMyRating(entityId).then(this.updateMyRating);
-      }).catch(logActiveAccountError);
-    }, 500);
-  }
-
-  updateOnLikeEvents() {
-    return this.ReLikeContract.deployed().then(instance => instance.ItemLiked(() => {
-      console.info('Saw a like event, updating...');
-      const { result: { entityId } } = this.state;
-      this.getLikeCount(entityId).then(this.updateLikeCount);
-      this.getMyRating(entityId).then(this.updateMyRating);
-    }));
   }
 
   updateLikeCount({ dislikes, likes }) {
@@ -227,36 +111,16 @@ class ReLike extends Component {
     this.setState({ myRating });
   }
 
-  unDislike(entityId) {
-    console.info('Undisliking', entityId);
-    return this.ReLikeContract.deployed().then(instance => {
-      return this.getActiveAccount().then(activeAccount => {
-        return instance.unDislike(entityId, { from: activeAccount, gas: 2000000 })
-          .catch(logError('Undisliking failed'));
-      }).catch(logActiveAccountError);
-    });
-  }
-
-  unLike(entityId) {
-    console.info('Unliking', entityId);
-    return this.ReLikeContract.deployed().then(instance => {
-      return this.getActiveAccount().then(activeAccount => {
-        return instance.unLike(entityId, { from: activeAccount, gas: 2000000 })
-          .catch(logError('Unliking failed'));
-      }).catch(logActiveAccountError);
-    });
-  }
-
   render() {
     const { myRating, result: { dislikes, entityId, likes }, searchInput } = this.state;
 
-    const handleLikeClick = this.doesLike(myRating)
-      ? () => this.unLike(entityId)
-      : () => this.like(entityId);
+    const handleLikeClick = doesLike(myRating)
+      ? () => this.reLikeUtils.unLike(entityId)
+      : () => this.reLikeUtils.like(entityId);
 
-    const handleDislikeClick = this.doesDislike(myRating)
-      ? () => this.unDislike(entityId)
-      : () => this.dislike(entityId);
+    const handleDislikeClick = doesDislike(myRating)
+      ? () => this.reLikeUtils.unDislike(entityId)
+      : () => this.reLikeUtils.dislike(entityId);
 
     return (
       <div className="flex-column">

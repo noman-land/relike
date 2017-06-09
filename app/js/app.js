@@ -65,8 +65,10 @@ class ReLike extends Component {
   dislike(entityId) {
     console.log('Disliking', entityId);
     return this.ReLikeContract.deployed().then(instance => {
-      return instance.dislike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
-        .catch(error => console.error('Disliking failed:', error));
+      return this.getActiveAccount().then(activeAccount => {
+        return instance.dislike(entityId, { from: activeAccount, gas: 2000000 })
+          .catch(logError('Disliking failed'));
+      }).catch(logActiveAccountError);
     });
   }
 
@@ -79,15 +81,21 @@ class ReLike extends Component {
   }
 
   getActiveAccount() {
-    const activeAccount = this.web3.eth.accounts[0];
+    const deferred = Q.defer();
 
-    if (!activeAccount) {
-      this.setState({ accountLoading: true });
-    } else {
+    this.web3.eth.getAccounts((error, accounts) => {
       this.setState({ accountLoading: false });
-    }
 
-    return activeAccount;
+      if (error) {
+        deferred.reject(error);
+        return false;
+      }
+
+      deferred.resolve(accounts[0]);
+      return true;
+    });
+
+    return deferred.promise;
   }
 
   getLikeCount(entityId) {
@@ -101,9 +109,12 @@ class ReLike extends Component {
 
   getMyRating(entityId) {
     return this.ReLikeContract.deployed().then(instance => {
-      return instance.getLikeById
-      .call(entityId, { from: this.getActiveAccount() })
-      .then(([rating]) => rating.toNumber());
+      return this.getActiveAccount().then(activeAccount => {
+        return instance.getLikeById
+          .call(entityId, { from: activeAccount })
+          .then(([rating]) => rating.toNumber())
+          .catch(logError('Getting rating failed'));
+      }).catch(logActiveAccountError);
     });
   }
 
@@ -143,8 +154,10 @@ class ReLike extends Component {
     console.info('Liking', entityId);
 
     return this.ReLikeContract.deployed().then(instance => {
-      return instance.like(entityId, { from: this.getActiveAccount(), gas: 2000000 })
-        .catch(error => console.error('Liking failed:', error));
+      return this.getActiveAccount().then(activeAccount => {
+        return instance.like(entityId, { from: activeAccount, gas: 2000000 })
+          .catch(logError('Liking failed'));
+      }).catch(logActiveAccountError);
     });
   }
 
@@ -173,22 +186,21 @@ class ReLike extends Component {
 
   updateOnAccountSwitch() {
     let lastActiveAccount = null;
-    let activeAccount = null;
 
     setInterval(() => {
       const { result: { entityId } } = this.state;
 
-      activeAccount = this.getActiveAccount();
+      this.getActiveAccount().then(activeAccount => {
+        if (activeAccount === lastActiveAccount) {
+          return;
+        }
 
-      if (activeAccount === lastActiveAccount) {
-        return;
-      }
+        console.info('Account switched to', activeAccount);
 
-      console.info('Account switched to', activeAccount);
-
-      lastActiveAccount = activeAccount;
-      this.getLikeCount(entityId).then(this.updateLikeCount);
-      this.getMyRating(entityId).then(this.updateMyRating);
+        lastActiveAccount = activeAccount;
+        this.getLikeCount(entityId).then(this.updateLikeCount);
+        this.getMyRating(entityId).then(this.updateMyRating);
+      }).catch(logActiveAccountError);
     }, 500);
   }
 
@@ -219,16 +231,20 @@ class ReLike extends Component {
   unDislike(entityId) {
     console.info('Undisliking', entityId);
     return this.ReLikeContract.deployed().then(instance => {
-      return instance.unDislike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
-        .catch(error => console.error('Undisliking failed:', error));
+      return this.getActiveAccount().then(activeAccount => {
+        return instance.unDislike(entityId, { from: activeAccount, gas: 2000000 })
+          .catch(logError('Undisliking failed'));
+      }).catch(logActiveAccountError);
     });
   }
 
   unLike(entityId) {
     console.info('Unliking', entityId);
     return this.ReLikeContract.deployed().then(instance => {
-      return instance.unLike(entityId, { from: this.getActiveAccount(), gas: 2000000 })
-        .catch(error => console.error('Unliking failed:', error));
+      return this.getActiveAccount().then(activeAccount => {
+        return instance.unLike(entityId, { from: activeAccount, gas: 2000000 })
+          .catch(logError('Unliking failed'));
+      }).catch(logActiveAccountError);
     });
   }
 

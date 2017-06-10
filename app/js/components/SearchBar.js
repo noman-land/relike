@@ -15,9 +15,9 @@ const inputClassNames = classnames([
 export default class SearchBar extends Component {
   static get propTypes() {
     return {
-      searchInput: PropTypes.string.isRequired,
       onInputChange: PropTypes.func.isRequired,
       onSubmit: PropTypes.func.isRequired,
+      searchInput: PropTypes.string.isRequired,
     };
   }
 

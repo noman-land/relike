@@ -31003,9 +31003,9 @@ var SearchBar = function (_Component) {
     key: 'propTypes',
     get: function get() {
       return {
-        searchInput: _propTypes2.default.string.isRequired,
         onInputChange: _propTypes2.default.func.isRequired,
-        onSubmit: _propTypes2.default.func.isRequired
+        onSubmit: _propTypes2.default.func.isRequired,
+        searchInput: _propTypes2.default.string.isRequired
       };
     }
   }]);
@@ -31043,6 +31043,7 @@ var SearchBar = function (_Component) {
             _this2.input = input;
           },
           onChange: onInputChange,
+          placeholder: 'find something to like',
           value: searchInput
         })
       );
@@ -31198,19 +31199,47 @@ var ReLikeUtils = function () {
       });
     }
   }, {
+    key: 'unDislike',
+    value: function unDislike(entityId) {
+      var _this4 = this;
+
+      console.info('Undisliking', entityId);
+      return this.ReLikeContract.deployed().then(function (instance) {
+        return _this4.getActiveAccount().then(function (activeAccount) {
+          return instance.unDislike(entityId, { from: activeAccount, gas: 2000000 }).catch((0, _loggingUtils.logError)('Failed to undislike'));
+        });
+      });
+    }
+  }, {
+    key: 'unLike',
+    value: function unLike(entityId) {
+      var _this5 = this;
+
+      console.info('Unliking', entityId);
+      return this.ReLikeContract.deployed().then(function (instance) {
+        return _this5.getActiveAccount().then(function (activeAccount) {
+          return instance.unLike(entityId, { from: activeAccount, gas: 2000000 }).catch((0, _loggingUtils.logError)('Failed to unlike'));
+        });
+      });
+    }
+  }, {
     key: 'updateOnAccountSwitch',
     value: function updateOnAccountSwitch(callback) {
-      var _this4 = this;
+      var _this6 = this;
 
       var oldAccount = null;
       setInterval(function () {
-        return _this4.getActiveAccount().then(function (newAccount) {
+        return _this6.getActiveAccount().then(function (newAccount) {
+          console.log('********', newAccount);
           if (oldAccount === newAccount) {
             return false;
           }
           console.info('Account switched to', newAccount);
           oldAccount = newAccount;
-          callback(newAccount);
+
+          if (typeof callback === 'function') {
+            callback(newAccount);
+          }
         });
       }, 500);
     }
@@ -31223,30 +31252,6 @@ var ReLikeUtils = function () {
 
           console.info('Saw a like event for:', entityId);
           callback(entityId);
-        });
-      });
-    }
-  }, {
-    key: 'unDislike',
-    value: function unDislike(entityId) {
-      var _this5 = this;
-
-      console.info('Undisliking', entityId);
-      return this.ReLikeContract.deployed().then(function (instance) {
-        return _this5.getActiveAccount().then(function (activeAccount) {
-          return instance.unDislike(entityId, { from: activeAccount, gas: 2000000 }).catch((0, _loggingUtils.logError)('Failed to undislike'));
-        });
-      });
-    }
-  }, {
-    key: 'unLike',
-    value: function unLike(entityId) {
-      var _this6 = this;
-
-      console.info('Unliking', entityId);
-      return this.ReLikeContract.deployed().then(function (instance) {
-        return _this6.getActiveAccount().then(function (activeAccount) {
-          return instance.unLike(entityId, { from: activeAccount, gas: 2000000 }).catch((0, _loggingUtils.logError)('Failed to unlike'));
         });
       });
     }
@@ -31371,6 +31376,7 @@ var ReLike = function (_Component) {
     _this.updateLikeCount = _this.updateLikeCount.bind(_this);
     _this.updateMyRating = _this.updateMyRating.bind(_this);
 
+    // init ReLike
     _this.reLikeUtils = new _ReLikeUtils2.default({
       onAccountSwitch: _this.onAccountSwitch,
       onLikeEvent: _this.onLikeEvent
@@ -31466,26 +31472,6 @@ var ReLike = function (_Component) {
       this.fetchDataAndUpdateCard(this.state.searchInput);
     }
   }, {
-    key: 'optimisticLike',
-    value: function optimisticLike() {
-      var _state4 = this.state,
-          _state4$result = _state4.result,
-          currentLikes = _state4$result.likes,
-          currentDislikes = _state4$result.dislikes,
-          currentMyRating = _state4.myRating;
-
-
-      var newDislikes = (0, _likingUtils.doesDislike)(currentMyRating) ? currentDislikes - 1 : currentDislikes;
-
-      this.setState({
-        myRating: 1,
-        result: _extends({}, this.state.result, {
-          likes: currentLikes + 1,
-          dislikes: newDislikes
-        })
-      });
-    }
-  }, {
     key: 'updateLikeCount',
     value: function updateLikeCount(_ref2) {
       var dislikes = _ref2.dislikes,
@@ -31507,41 +31493,32 @@ var ReLike = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _state5 = this.state,
-          myRating = _state5.myRating,
-          _state5$result = _state5.result,
-          dislikes = _state5$result.dislikes,
-          entityId = _state5$result.entityId,
-          likes = _state5$result.likes,
-          searchInput = _state5.searchInput;
+      var _state4 = this.state,
+          myRating = _state4.myRating,
+          _state4$result = _state4.result,
+          dislikes = _state4$result.dislikes,
+          entityId = _state4$result.entityId,
+          likes = _state4$result.likes,
+          searchInput = _state4.searchInput;
 
 
       return _react2.default.createElement(
         'div',
-        { className: 'flex-column' },
-        _react2.default.createElement(
-          'h2',
-          { className: 'm-4 text-center' },
-          'Like anything'
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'flex-column p-4-x p-4-b p-0-t' },
-          _react2.default.createElement(_SearchBar2.default, {
-            searchInput: searchInput,
-            onInputChange: this.handleInputChange,
-            onSubmit: this.handleSubmit
-          }),
-          entityId && _react2.default.createElement(_LikeCard2.default, {
-            dislikes: dislikes,
-            entityId: entityId,
-            likes: likes,
-            myRating: myRating,
-            onDislikeClick: this.handleDislikeClick,
-            onLikeClick: this.handleLikeClick,
-            pendingLikes: this.state.pendingLikes
-          })
-        )
+        { className: 'flex-column p-4' },
+        _react2.default.createElement(_SearchBar2.default, {
+          onInputChange: this.handleInputChange,
+          onSubmit: this.handleSubmit,
+          searchInput: searchInput
+        }),
+        entityId && _react2.default.createElement(_LikeCard2.default, {
+          dislikes: dislikes,
+          entityId: entityId,
+          likes: likes,
+          myRating: myRating,
+          onDislikeClick: this.handleDislikeClick,
+          onLikeClick: this.handleLikeClick,
+          pendingLikes: this.state.pendingLikes
+        })
       );
     }
   }]);

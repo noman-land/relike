@@ -39,6 +39,7 @@ export default class SearchBar extends Component {
           className={inputClassNames}
           ref={input => { this.input = input; }}
           onChange={onInputChange}
+          placeholder="find something to like"
           value={searchInput}
         />
       </form>

@@ -134,28 +134,23 @@ class ReLike extends Component {
     const { myRating, result: { dislikes, entityId, likes }, searchInput } = this.state;
 
     return (
-      <div className="flex-column">
-        <h2 className="m-4 text-center">
-          Like anything
-        </h2>
-        <div className="flex-column p-4-x p-4-b p-0-t">
-          <SearchBar
-            searchInput={searchInput}
-            onInputChange={this.handleInputChange}
-            onSubmit={this.handleSubmit}
+      <div className="flex-column p-4">
+        <SearchBar
+          onInputChange={this.handleInputChange}
+          onSubmit={this.handleSubmit}
+          searchInput={searchInput}
+        />
+        {entityId && (
+          <LikeCard
+            dislikes={dislikes}
+            entityId={entityId}
+            likes={likes}
+            myRating={myRating}
+            onDislikeClick={this.handleDislikeClick}
+            onLikeClick={this.handleLikeClick}
+            pendingLikes={this.state.pendingLikes}
           />
-          {entityId && (
-            <LikeCard
-              dislikes={dislikes}
-              entityId={entityId}
-              likes={likes}
-              myRating={myRating}
-              onDislikeClick={this.handleDislikeClick}
-              onLikeClick={this.handleLikeClick}
-              pendingLikes={this.state.pendingLikes}
-            />
-          )}
-        </div>
+        )}
       </div>
     );
   }

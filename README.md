@@ -26,17 +26,17 @@ You can instantiate it like so:
 
 There are some overrides that you can optionally give it.
 
-<DESCRIBE>
+    <DESCRIBE>
 
 Thirdly, it's a `ReLikeCard.js` React component that you can import into your dapps and get from npm. It looks like this.
 
-<SCREENSHOT>
+    <SCREENSHOT>
 
 It plugs itself into `ReLikeUtils` and basically is a small component that displays the public like/dislike tallies for any string it's given as a `prop`.
 
 It gets instantiated like so:
 
-<CODE>
+    <CODE>
 
 Fourthly, it's a script tag that you can drop into your non-React dapp. This is for non-React people who would still like an easy way to add this feature to their app. Any web app that embeds this feature gets immediate access to Ethereum on any web3 enabled browser, such as Status or Mist or Chrome with the MetaMask extension installed. Here's how you use it:
 

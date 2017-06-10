@@ -114,29 +114,6 @@ class ReLike extends Component {
     this.fetchDataAndUpdateCard(this.state.searchInput);
   }
 
-  optimisticLike() {
-    const {
-      result: {
-        likes: currentLikes,
-        dislikes: currentDislikes,
-      },
-      myRating: currentMyRating,
-    } = this.state;
-
-    const newDislikes = doesDislike(currentMyRating)
-      ? currentDislikes - 1
-      : currentDislikes;
-
-    this.setState({
-      myRating: 1,
-      result: {
-        ...this.state.result,
-        likes: currentLikes + 1,
-        dislikes: newDislikes,
-      },
-    });
-  }
-
   updateLikeCount({ dislikes, likes }) {
     console.info('Updating like count', likes, dislikes);
     this.setState({

@@ -40,6 +40,7 @@ export default class SearchBar extends Component {
           ref={input => { this.input = input; }}
           onChange={onInputChange}
           value={searchInput}
+          autofocus=autofocus
         />
       </form>
     );

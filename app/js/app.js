@@ -40,6 +40,7 @@ class ReLike extends Component {
     this.updateLikeCount = this.updateLikeCount.bind(this);
     this.updateMyRating = this.updateMyRating.bind(this);
 
+    // init ReLike
     this.reLikeUtils = new ReLikeUtils({
       onAccountSwitch: this.onAccountSwitch,
       onLikeEvent: this.onLikeEvent,

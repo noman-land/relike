@@ -20,9 +20,10 @@ Secondly, it's the `ReLikeUtils.js` Javascript library on npm that allows you to
 
 You can instantiate it like so:
 
-```
-// code
-```
+
+    // code
+
+
 There are some overrides that you can optionally give it.
 
 <DESCRIBE>

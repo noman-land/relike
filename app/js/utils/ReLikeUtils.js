@@ -88,26 +88,6 @@ export default class ReLikeUtils {
     });
   }
 
-  updateOnAccountSwitch(callback) {
-    let oldAccount = null;
-    setInterval(() => this.getActiveAccount().then(newAccount => {
-      if (oldAccount === newAccount) {
-        return false;
-      }
-      console.info('Account switched to', newAccount);
-      oldAccount = newAccount;
-      callback(newAccount);
-    }), 500);
-  }
-
-  updateOnLikeEvents(callback) {
-    this.ReLikeContract.deployed().then(instance => instance.ItemLiked((error, result) => {
-      const { args: { entityId } } = result;
-      console.info('Saw a like event for:', entityId);
-      callback(entityId);
-    }));
-  }
-
   unDislike(entityId) {
     console.info('Undisliking', entityId);
     return this.ReLikeContract.deployed().then(instance => {
@@ -126,5 +106,29 @@ export default class ReLikeUtils {
         .catch(logError('Failed to unlike'));
       });
     });
+  }
+
+  updateOnAccountSwitch(callback) {
+    let oldAccount = null;
+    setInterval(() => this.getActiveAccount().then(newAccount => {
+      console.log('********', newAccount);
+      if (oldAccount === newAccount) {
+        return false;
+      }
+      console.info('Account switched to', newAccount);
+      oldAccount = newAccount;
+
+      if (typeof callback === 'function') {
+        callback(newAccount);
+      }
+    }), 500);
+  }
+
+  updateOnLikeEvents(callback) {
+    this.ReLikeContract.deployed().then(instance => instance.ItemLiked((error, result) => {
+      const { args: { entityId } } = result;
+      console.info('Saw a like event for:', entityId);
+      callback(entityId);
+    }));
   }
 }

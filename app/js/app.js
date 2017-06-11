@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ReLikeUtils from 'relike-utils';
 
+import ReLikeUtils from 'relike-utils';
 import { Map } from 'immutable';
 
 import '../sass/style.sass';

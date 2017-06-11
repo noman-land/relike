@@ -156,16 +156,8 @@ class ReLike extends Component {
   }
 }
 
-ReLike.init = () => {
-  const interval = setInterval(() => {
-    const appContainer = document.getElementById('relike-application');
-
-    if (appContainer === null) return false;
-
-    clearInterval(interval);
-    ReactDOM.render(<ReLike />, appContainer);
-    return true;
-  }, 100);
-};
-
-ReLike.init();
+document.addEventListener('DOMContentLoaded', () => {
+  const appContainer = document.getElementById('relike-application');
+  ReactDOM.render(<ReLike />, appContainer);
+  return true;
+});

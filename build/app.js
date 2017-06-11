@@ -33811,11 +33811,13 @@ var ReLikeUtils = function () {
         onLikeEvent = _ref.onLikeEvent,
         web3Override = _ref.web3Override;
 
-    if (typeof web3Override === 'function') {
-      this.web3 = web3Override(this.web3);
-    } else {
-      this.initWeb3();
-    }
+    //if (typeof web3Override === 'function') {
+    //  this.web3 = web3Override(this.web3);
+    //} else {
+
+
+    this.initWeb3();
+    //}
 
     this.ReLikeContract = (0, _truffleContract2.default)(_ReLike2.default);
     this.ReLikeContract.setProvider(this.web3.currentProvider);
@@ -33893,7 +33895,8 @@ var ReLikeUtils = function () {
         console.warn('Using web3 detected from external source.');
         this.web3 = new _web2.default(window.web3.currentProvider);
       } else if (typeof fallback === 'function') {
-        fallback();
+        this.web3 = new _web2.default(new _web2.default.providers.HttpProvider('http://localhost:8545'));
+        //fallback();
       }
       window.web3 = this.web3;
     }
@@ -33960,7 +33963,6 @@ var ReLikeUtils = function () {
         return instance.ItemLiked(function (error, result) {
           var entityId = result.args.entityId;
 
-          console.info('Saw a like event for:', entityId);
           callback(entityId);
         });
       });

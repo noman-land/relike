@@ -43,7 +43,7 @@ const reLikeUtils = new ReLikeUtils({
 
 Thirdly, it's a `ReLikeCard.js`, a simple React component that you can import into your dapps and get from npm. It looks like this.
 
-<img src="https://i.imgur.com/8d1G1Ez.png" />
+<img src="https://i.imgur.com/8d1G1Ez.png" width="250px" />
 
 It plugs itself into `ReLikeUtils` and basically is a small component that displays the public like/dislike tallies for any string it's given as a `prop`.
 
@@ -63,7 +63,7 @@ It gets instantiated like so:
 
 Fourthly, it's a Status optimized web app that lets you search for things, see how other people like them and then like things yourself.
 
-<img src="https://i.imgur.com/xts3YCS.png" />
+<img src="https://i.imgur.com/xts3YCS.png" width="400px" />
 
 ## But what's the point?
 

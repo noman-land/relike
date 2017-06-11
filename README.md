@@ -61,21 +61,7 @@ It gets instantiated like so:
 />
 ```
 
-Fourthly, it's a script tag that you can drop into your non-React dapp. This is for non-React people who would still like an easy way to add this feature to their app. Any web app that embeds this feature gets immediate access to Ethereum on any web3 enabled browser, such as Status or Mist or Chrome with the MetaMask extension installed. Here's how you use it:
-
-Embed this script anywhere on your web page to instantly get universal liking functionality. Put the script in the exact place you want the ReLike button to show up, as the script replaces itself with the button.
-
-```html
-<script
-  id="relike--universal-like-button--entrypoint"
-  data-entity-id="https://some-url-to-like.com"
-  src="https://git.noman.land/noman/relike/blob/master/build/app.js"
-></script>
-```
-
-The `data-entity-id` attribute that is passed will be the entity that is "like"d. Ideally the `data-entity-id` is an IPFS hash and can therefore be anything from an article, to a photo, to a video or song, or any data whatsoever that you want to "like".
-
-Fifthly it's a Status optimized web app that lets you search for things, see how other people like them and then like things yourself.
+Fourthly, it's a Status optimized web app that lets you search for things, see how other people like them and then like things yourself.
 
 <SCREENSHOT>
 
@@ -128,6 +114,10 @@ I think it might be fair for the developer of a feature to get a tiny fractional
  - Millions of fake accounts liking things. Can this be mitigated? Is "it's expensive to do that" the only answer?
  - Learning to build and deploy an Android app was fun and interesting
  - Ethereum is completely revolutionary
+
+   An interesting bug I came across while testing my dapp with @roma in Slack was that I had a `console.log()` firing every time I saw some contract event in my dapp. In this case a "like". @roma was browsing the app while his blockchain was still syncing. So first it completely wasn't working because the place he was in the blockchain didn't have that contract deployed yet. Then he was getting hundreds of logs in his console as the chain was syncing and playing back all the events from the past.
+
+   A note to dapp developers. Think about scenarios where your users are using your dapp while not being completely in sync with the blockchain. Strange things can happen!
 
 ## Development
 

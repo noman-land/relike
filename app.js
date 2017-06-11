@@ -33885,13 +33885,12 @@ var ReLikeUtils = function () {
   }, {
     key: 'initWeb3',
     value: function initWeb3(fallback) {
-      if (typeof window.web3 !== 'undefined') {
-        console.warn('Using web3 detected from external source.');
-        this.web3 = new _web2.default(window.web3.currentProvider);
+      if (typeof web3 !== 'undefined') {
+        console.warn('Using web3 detected from external source');
+        this.web3 = new _web2.default(web3.currentProvider);
       } else if (typeof fallback === 'function') {
+        console.warn('Using web3 provided by the fallback function');
         this.web3 = fallback();
-      } else {
-        this.web3 = new _web2.default(new _web2.default.providers.HttpProvider('http://localhost:8545'));
       }
       window.web3 = this.web3;
     }
@@ -44500,11 +44499,19 @@ var ReLike = function (_Component) {
   return ReLike;
 }(_react.Component);
 
-document.addEventListener('DOMContentLoaded', function () {
-  var appContainer = document.getElementById('relike-application');
-  _reactDom2.default.render(_react2.default.createElement(ReLike, null), appContainer);
-  return true;
-});
+ReLike.init = function () {
+  var interval = setInterval(function () {
+    var appContainer = document.getElementById('relike-application');
+
+    if (appContainer === null || !window.web3) return false;
+
+    clearInterval(interval);
+    _reactDom2.default.render(_react2.default.createElement(ReLike, null), appContainer);
+    return true;
+  }, 100);
+};
+
+ReLike.init();
 
 /***/ }),
 /* 93 */

@@ -45,7 +45,7 @@ const reLikeUtils = new ReLikeUtils({
 
 Thirdly, it's a `ReLikeCard.js` React component that you can import into your dapps and get from npm. It looks like this.
 
-    <SCREENSHOT>
+<img src="https://i.imgur.com/8d1G1Ez.png" />
 
 It plugs itself into `ReLikeUtils` and basically is a small component that displays the public like/dislike tallies for any string it's given as a `prop`.
 

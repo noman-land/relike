@@ -1,5 +1,3 @@
-# *** WORK IN PROGRESS ***
-
 # ReLike
 
 Decentralized public liking service, powered by Ethereum.

@@ -63,7 +63,7 @@ It gets instantiated like so:
 
 Fourthly, it's a Status optimized web app that lets you search for things, see how other people like them and then like things yourself.
 
-<img src="https://i.imgur.com/xts3YCS.png" width="400px" />
+<img src="https://i.imgur.com/dIk0YYb.gif" width="400px" />
 
 ## But what's the point?
 

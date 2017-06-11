@@ -115,7 +115,7 @@ I think it might be fair for the developer of a feature to get a tiny fractional
  - Learning to build and deploy an Android app was fun and interesting
  - Ethereum is completely revolutionary
 
-   An interesting bug I came across while testing my dapp with @roma in Slack was that I had a `console.log()` firing every time I saw some contract event in my dapp. In this case a "like". @roma was browsing the app while his blockchain was still syncing. So first it completely wasn't working because the place he was in the blockchain didn't have that contract deployed yet. Then he was getting hundreds of logs in his console as the chain was syncing and playing back all the events from the past.
+ - An interesting bug I came across while testing my dapp with @roma in Slack was that I had a `console.log()` firing every time I saw some contract event in my dapp. In this case a "like". @roma was browsing the app while his blockchain was still syncing. So first it completely wasn't working because the place he was in the blockchain didn't have that contract deployed yet. Then he was getting hundreds of logs in his console as the chain was syncing and playing back all the events from the past.
 
    A note to dapp developers. Think about scenarios where your users are using your dapp while not being completely in sync with the blockchain. Strange things can happen!
 
@@ -154,6 +154,16 @@ I think it might be fair for the developer of a feature to get a tiny fractional
     ```
     npm run dev
     ```
+
+### A note on running with Status
+
+Instead of running `npm run dev` run `npm run dev -- --host <YOUR COMPUTER'S IP>`
+
+Then add the dapp to Status with:
+
+```
+status-dev-cli add '{ "whisper-identity": "relike-dev", "name": "ReLike-dev", "dapp-url": "<YOUR COMPUTER'S IP>:8080"}' --ip <YOUR PHONE'S IP>
+```
 
 ### Pushing gh-pages branch
 

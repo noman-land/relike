@@ -22,22 +22,26 @@ Secondly, it's the [`ReLikeUtils.js`](https://github.com/noman-land/relike-utils
 
 You can instantiate it like so:
 
-    const reLikeUtils = new ReLikeUtils();
+```js
+const reLikeUtils = new ReLikeUtils();
+```
 
 There are some options you can give it if you so desire:
 
-    const reLikeUtils = new ReLikeUtils({
-      // This function will be called every time ReLike notices the primary account switching
-      onAccountSwitch: function(newAccount) {}
-      
-      // This function will be called every time ReLike gets an event notification of a new like
-      // In the future this function will receive the rating and the address that liked it as well
-      onLikeEvent: function(entityId) {}
-       
-      // This function will be fired when ReLike is initializing and should return a web3 object that ReLike will use instead of the one it finds
-      // It receives the current web3 object if one was found
-      web3Override: function(currentWeb3Object) {}
-    });
+```js
+const reLikeUtils = new ReLikeUtils({
+  // This function will be called every time ReLike notices the primary account switching
+  onAccountSwitch: function(newAccount) {}
+  
+  // This function will be called every time ReLike gets an event notification of a new like
+  // In the future this function will receive the rating and the address that liked it as well
+  onLikeEvent: function(entityId) {}
+  
+  // This function will be fired when ReLike is initializing and should return a web3 object that ReLike will use instead of the one it finds
+  // It receives the current web3 object if one was found
+  web3Override: function(currentWeb3Object) {}
+});
+```
 
 Thirdly, it's a `ReLikeCard.js` React component that you can import into your dapps and get from npm. It looks like this.
 
@@ -47,25 +51,29 @@ It plugs itself into `ReLikeUtils` and basically is a small component that displ
 
 It gets instantiated like so:
 
-    <ReLikeCard
-      dislikes={dislikes}
-      entityId={entityId}
-      likes={likes}
-      myRating={myRating}
-      onDislikeClick={handleDislikeClick}
-      onLikeClick={handleLikeClick}
-      pendingLikes={pendingLikes}
-    />
+```js
+<ReLikeCard
+  dislikes={dislikes}
+  entityId={entityId}
+  likes={likes}
+  myRating={myRating}
+  onDislikeClick={handleDislikeClick}
+  onLikeClick={handleLikeClick}
+  pendingLikes={pendingLikes}
+/>
+```
 
 Fourthly, it's a script tag that you can drop into your non-React dapp. This is for non-React people who would still like an easy way to add this feature to their app. Any web app that embeds this feature gets immediate access to Ethereum on any web3 enabled browser, such as Status or Mist or Chrome with the MetaMask extension installed. Here's how you use it:
 
 Embed this script anywhere on your web page to instantly get universal liking functionality. Put the script in the exact place you want the ReLike button to show up, as the script replaces itself with the button.
 
-    <script
-      id="relike--universal-like-button--entrypoint" 
-      data-entity-id="https://some-url-to-like.com"
-      src="https://git.noman.land/noman/relike/blob/master/build/app.js"
-    ></script>
+```html
+<script
+  id="relike--universal-like-button--entrypoint"
+  data-entity-id="https://some-url-to-like.com"
+  src="https://git.noman.land/noman/relike/blob/master/build/app.js"
+></script>
+```
 
 The `data-entity-id` attribute that is passed will be the entity that is "like"d. Ideally the `data-entity-id` is an IPFS hash and can therefore be anything from an article, to a photo, to a video or song, or any data whatsoever that you want to "like".
 
@@ -89,7 +97,7 @@ I imagine this to be a small piece in a larger ecosystem of interoperable pieces
 
 ## Future ideas
 
- - [ ] Upgrade to 6-point scale
+ - [ ] Upgrade to 6-point scale?
       1. Hated it
       2. Really disliked it
       3. Disliked it

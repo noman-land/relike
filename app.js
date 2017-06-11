@@ -44500,19 +44500,11 @@ var ReLike = function (_Component) {
   return ReLike;
 }(_react.Component);
 
-ReLike.init = function () {
-  var interval = setInterval(function () {
-    var appContainer = document.getElementById('relike-application');
-
-    if (appContainer === null) return false;
-
-    clearInterval(interval);
-    _reactDom2.default.render(_react2.default.createElement(ReLike, null), appContainer);
-    return true;
-  }, 100);
-};
-
-ReLike.init();
+document.addEventListener('DOMContentLoaded', function () {
+  var appContainer = document.getElementById('relike-application');
+  _reactDom2.default.render(_react2.default.createElement(ReLike, null), appContainer);
+  return true;
+});
 
 /***/ }),
 /* 93 */

@@ -31,19 +31,19 @@ There are some options you can give it if you so desire:
 ```js
 const reLikeUtils = new ReLikeUtils({
   // This function will be called every time ReLike notices the primary account switching
-  onAccountSwitch: function(newAccount) {}
+  onAccountSwitch: function(newAccount) {},
   
   // This function will be called every time ReLike gets an event notification of a new like
   // In the future this function will receive the rating and the address that liked it as well
-  onLikeEvent: function(entityId) {}
+  onLikeEvent: function(entityId) {},
   
   // This function will be fired when ReLike is initializing and should return a web3 object that ReLike will use instead of the one it finds
   // It receives the current web3 object if one was found
-  web3Override: function(currentWeb3Object) {}
+  web3Override: function(currentWeb3Object) {},
 });
 ```
 
-Thirdly, it's a `ReLikeCard.js` React component that you can import into your dapps and get from npm. It looks like this.
+Thirdly, it's a `ReLikeCard.js`, a simple React component that you can import into your dapps and get from npm. It looks like this.
 
 <img src="https://i.imgur.com/8d1G1Ez.png" />
 

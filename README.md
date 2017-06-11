@@ -2,6 +2,8 @@
 
 # ReLike
 
+Decentralized public liking service, powered by Ethereum.
+
 ## What is this?
 
 I think I'm going to call this the first standalone decentralized feature. dfeature? deature? It isn't a whole dapp, it's just a feature. 

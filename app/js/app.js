@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import ReLikeUtils from 'relike-utils';
 
 import { Map } from 'immutable';
 
@@ -9,7 +10,6 @@ import LikeCard from './components/LikeCard';
 import SearchBar from './components/SearchBar';
 
 import { doesDislike, doesLike } from './utils/likingUtils';
-import ReLikeUtils from './utils/ReLikeUtils';
 
 class ReLike extends Component {
   constructor(props, context) {

@@ -16,19 +16,28 @@ When a user joins a new service that implements this feature, all their liking d
 
 ## What actually is it?
 
-First, it is the `ReLike.sol` smart contract that runs on Ethereum. At the moment it is deployed on the Ropsten testnet at <THIS ADDRESS> and the code for it is <HERE>. It's the brain of the liking service and it has such killer features as `like()`, `unLike()`, and even the hot new `dislike()` and `unDislike()`. Also, such other classics as `getLikeById()`. This thing stores all the data for the _entire world_ of likers and dislikers.
+First, it is the [`ReLike.sol`](https://github.com/noman-land/relike-utils/blob/master/contracts/ReLike.sol) smart contract that runs on Ethereum. At the moment it is deployed on the Ropsten testnet at `0x1fb078aee03341485d78637c80358760b20a7a5b`. It's the brain of the liking service and it has such killer features as `like()`, `unLike()`, and even the hot new `dislike()` and `unDislike()`. Also, such other classics as `getLikeById()`. This thing stores all the data for the _entire world_ of likers and dislikers.
 
-Secondly, it's the `ReLikeUtils.js` Javascript library on npm that allows you to interface with the ReLike service from your Javascript apps. It has all the same classics like `like()` and `unLike()`, etc.
+Secondly, it's the [`ReLikeUtils.js`](https://github.com/noman-land/relike-utils) Javascript library on npm that allows you to interface with the ReLike service from your Javascript apps. It has all the same classics like `like()` and `unLike()`, etc.
 
 You can instantiate it like so:
 
+    const reLikeUtils = new ReLikeUtils();
 
-    // code
+There are some options you can give it if you so desire:
 
-
-There are some overrides that you can optionally give it.
-
-    <DESCRIBE>
+    const reLikeUtils = new ReLikeUtils({
+      // This function will be called every time ReLike notices the primary account switching
+      onAccountSwitch: function(newAccount) {}
+      
+      // This function will be called every time ReLike gets an event notification of a new like
+      // In the future this function will receive the rating and the address that liked it as well
+      onLikeEvent: function(entityId) {}
+       
+      // This function will be fired when ReLike is initializing and should return a web3 object that ReLike will use instead of the one it finds
+      // It receives the current web3 object if one was found
+      web3Override: function(currentWeb3Object) {}
+    });
 
 Thirdly, it's a `ReLikeCard.js` React component that you can import into your dapps and get from npm. It looks like this.
 
@@ -38,7 +47,15 @@ It plugs itself into `ReLikeUtils` and basically is a small component that displ
 
 It gets instantiated like so:
 
-    <CODE>
+    <ReLikeCard
+      dislikes={dislikes}
+      entityId={entityId}
+      likes={likes}
+      myRating={myRating}
+      onDislikeClick={handleDislikeClick}
+      onLikeClick={handleLikeClick}
+      pendingLikes={pendingLikes}
+    />
 
 Fourthly, it's a script tag that you can drop into your non-React dapp. This is for non-React people who would still like an easy way to add this feature to their app. Any web app that embeds this feature gets immediate access to Ethereum on any web3 enabled browser, such as Status or Mist or Chrome with the MetaMask extension installed. Here's how you use it:
 

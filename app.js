@@ -6750,7 +6750,6 @@ var _constants = __webpack_require__(94);
 var doesDislike = exports.doesDislike = function doesDislike(myRating) {
   return _constants.Ratings[myRating] === _constants.RatingTypes.DISLIKE;
 };
-
 var doesLike = exports.doesLike = function doesLike(myRating) {
   return _constants.Ratings[myRating] === _constants.RatingTypes.LIKE;
 };
@@ -15200,8 +15199,7 @@ exports.clearImmediate = clearImmediate;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.default = LikeCard;
 
 var _react = __webpack_require__(25);
 
@@ -15223,95 +15221,67 @@ var _likingUtils = __webpack_require__(53);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function LikeCard(_ref) {
+  var dislikes = _ref.dislikes,
+      entityId = _ref.entityId,
+      likes = _ref.likes,
+      myRating = _ref.myRating,
+      onDislikeClick = _ref.onDislikeClick,
+      onLikeClick = _ref.onLikeClick,
+      pendingLikes = _ref.pendingLikes;
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+  var likePending = !!(pendingLikes.getIn([entityId, 'like']) || pendingLikes.getIn([entityId, 'unLike']));
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+  var dislikePending = !!(pendingLikes.getIn([entityId, 'dislike']) || pendingLikes.getIn([entityId, 'unDislike']));
 
-var LikeCard = function (_Component) {
-  _inherits(LikeCard, _Component);
-
-  function LikeCard() {
-    _classCallCheck(this, LikeCard);
-
-    return _possibleConstructorReturn(this, (LikeCard.__proto__ || Object.getPrototypeOf(LikeCard)).apply(this, arguments));
-  }
-
-  _createClass(LikeCard, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          dislikes = _props.dislikes,
-          entityId = _props.entityId,
-          likes = _props.likes,
-          myRating = _props.myRating,
-          onDislikeClick = _props.onDislikeClick,
-          onLikeClick = _props.onLikeClick,
-          pendingLikes = _props.pendingLikes;
-
-
-      var likePending = !!(pendingLikes.getIn([entityId, 'like']) || pendingLikes.getIn([entityId, 'unLike']));
-
-      var dislikePending = !!(pendingLikes.getIn([entityId, 'dislike']) || pendingLikes.getIn([entityId, 'unDislike']));
-
-      return _react2.default.createElement(
+  return _react2.default.createElement(
+    'div',
+    { className: 'flex-column p-0 border-solid border-1 border-radius-2 border-grey-lt m-4-t' },
+    _react2.default.createElement(
+      'div',
+      { key: entityId, className: 'result' },
+      _react2.default.createElement(
+        'span',
+        { className: 'text-center ellipsis text-size-12 p-8-y' },
+        entityId
+      ),
+      _react2.default.createElement(
         'div',
-        { className: 'flex-column p-0 border-solid border-1 border-radius-2 border-grey-lt m-4-t' },
-        _react2.default.createElement(
-          'div',
-          { key: entityId, className: 'result' },
-          _react2.default.createElement(
-            'span',
-            { className: 'text-center ellipsis text-size-12 p-8-y' },
-            entityId
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'flex flex-grow-1 justify-space-between p-4' },
-            _react2.default.createElement(_Thumb2.default, {
-              active: (0, _likingUtils.doesLike)(myRating),
-              count: likes,
-              direction: 'up',
-              filled: false,
-              onClick: onLikeClick,
-              pending: likePending,
-              textSize: 8,
-              thumbSize: 14
-            }),
-            _react2.default.createElement(_Thumb2.default, {
-              active: (0, _likingUtils.doesDislike)(myRating),
-              count: dislikes,
-              direction: 'down',
-              filled: false,
-              onClick: onDislikeClick,
-              pending: dislikePending,
-              textSize: 8,
-              thumbSize: 14
-            })
-          )
-        )
-      );
-    }
-  }], [{
-    key: 'propTypes',
-    get: function get() {
-      return {
-        dislikes: _propTypes2.default.number.isRequired,
-        entityId: _propTypes2.default.string.isRequired,
-        likes: _propTypes2.default.number.isRequired,
-        myRating: _propTypes2.default.number.isRequired,
-        onDislikeClick: _propTypes2.default.func.isRequired,
-        onLikeClick: _propTypes2.default.func.isRequired,
-        pendingLikes: _reactImmutableProptypes2.default.map.isRequired
-      };
-    }
-  }]);
+        { className: 'flex flex-grow-1 justify-space-between p-4' },
+        _react2.default.createElement(_Thumb2.default, {
+          active: (0, _likingUtils.doesLike)(myRating),
+          count: likes,
+          direction: 'up',
+          filled: false,
+          onClick: onLikeClick,
+          pending: likePending,
+          textSize: 8,
+          thumbSize: 14
+        }),
+        _react2.default.createElement(_Thumb2.default, {
+          active: (0, _likingUtils.doesDislike)(myRating),
+          count: dislikes,
+          direction: 'down',
+          filled: false,
+          onClick: onDislikeClick,
+          pending: dislikePending,
+          textSize: 8,
+          thumbSize: 14
+        })
+      )
+    )
+  );
+}
 
-  return LikeCard;
-}(_react.Component);
-
-exports.default = LikeCard;
+LikeCard.propTypes = {
+  dislikes: _propTypes2.default.number.isRequired,
+  entityId: _propTypes2.default.string.isRequired,
+  likes: _propTypes2.default.number.isRequired,
+  myRating: _propTypes2.default.number.isRequired,
+  onDislikeClick: _propTypes2.default.func.isRequired,
+  onLikeClick: _propTypes2.default.func.isRequired,
+  pendingLikes: _reactImmutableProptypes2.default.map.isRequired
+};
 
 /***/ }),
 /* 88 */
@@ -31607,10 +31577,39 @@ module.exports = {
 			"links": {},
 			"address": "0x1fb078aee03341485d78637c80358760b20a7a5b",
 			"updated_at": 1494180157313
+		},
+		"5199": {
+			"events": {
+				"0xb8ffb20080e4ffaa686f85ccc9cc2ca31096eb9ffc51ba304e226dd96f1b1691": {
+					"anonymous": false,
+					"inputs": [
+						{
+							"indexed": true,
+							"name": "user",
+							"type": "address"
+						},
+						{
+							"indexed": false,
+							"name": "entityId",
+							"type": "string"
+						},
+						{
+							"indexed": false,
+							"name": "rating",
+							"type": "uint8"
+						}
+					],
+					"name": "ItemLiked",
+					"type": "event"
+				}
+			},
+			"links": {},
+			"address": "0xc5390d4972b421c91544e037065eae6e02cd400f",
+			"updated_at": 1499366198190
 		}
 	},
 	"schema_version": "0.0.5",
-	"updated_at": 1496517474725
+	"updated_at": 1499366198190
 };
 
 /***/ }),

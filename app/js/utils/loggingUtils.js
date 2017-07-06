@@ -1,4 +1,4 @@
-export const logError = message => (error) => {
+export const logError = message => error => {
   console.error(message, error); // eslint-disable-line
 };
 

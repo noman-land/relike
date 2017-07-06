@@ -9,6 +9,7 @@
   },
   "rules": {
     "arrow-body-style": [2, "as-needed"],
+    "arrow-parens": [2, "as-needed"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "space-before-function-paren": [2, "never"]
   }

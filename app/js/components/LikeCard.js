@@ -7,9 +7,9 @@ import { doesDislike, doesLike } from '../utils/likingUtils';
 
 export default function LikeCard({
   dislikes,
+  entityId,
   isDislikePending,
   isLikePending,
-  entityId,
   likes,
   myRating,
   onDislikeClick,

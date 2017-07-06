@@ -44,7 +44,9 @@ export default function LikeCard({
             thumbSize={14}
           />
         </div>
-        <LikeDislikeRatio dislikes={dislikes} likes={likes} />
+        {(likes > 0 || dislikes > 0) && (
+          <LikeDislikeRatio dislikes={dislikes} likes={likes} />
+        )}
       </div>
     </div>
   );

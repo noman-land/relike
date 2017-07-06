@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import LikeDislikeRatio from './LikeDislikeRatio';
 import Thumb from './Thumb';
 
 import { doesDislike, doesLike } from '../utils/likingUtils';
@@ -43,6 +44,7 @@ export default function LikeCard({
             thumbSize={14}
           />
         </div>
+        <LikeDislikeRatio dislikes={dislikes} likes={likes} />
       </div>
     </div>
   );

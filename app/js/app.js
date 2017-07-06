@@ -47,6 +47,20 @@ class ReLike extends Component {
     });
   }
 
+  isDislikePending() {
+    const { pendingLikes, result: { entityId } } = this.state;
+
+    return !!(pendingLikes.getIn([entityId, 'dislike'])
+      || pendingLikes.getIn([entityId, 'unDislike']));
+  }
+
+  isLikePending() {
+    const { pendingLikes, result: { entityId } } = this.state;
+
+    return !!(pendingLikes.getIn([entityId, 'like'])
+      || pendingLikes.getIn([entityId, 'unLike']));
+  }
+
   onAccountSwitch(activeAccount) {
     this.setState({ activeAccount });
     this.fetchDataAndUpdateCard(this.state.result.entityId);
@@ -131,7 +145,15 @@ class ReLike extends Component {
   }
 
   render() {
-    const { myRating, result: { dislikes, entityId, likes }, searchInput } = this.state;
+    const {
+      myRating,
+      result: {
+        dislikes,
+        entityId,
+        likes,
+      },
+      searchInput,
+    } = this.state;
 
     return (
       <div className="flex-column p-4">
@@ -144,11 +166,12 @@ class ReLike extends Component {
           <LikeCard
             dislikes={dislikes}
             entityId={entityId}
+            isDislikePending={this.isDislikePending()}
+            isLikePending={this.isLikePending()}
             likes={likes}
             myRating={myRating}
             onDislikeClick={this.handleDislikeClick}
             onLikeClick={this.handleLikeClick}
-            pendingLikes={this.state.pendingLikes}
           />
         )}
       </div>

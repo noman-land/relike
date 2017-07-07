@@ -16,6 +16,7 @@ export default function LikeCard({
   onDislikeClick,
   onLikeClick,
 }) {
+  const isRated = likes > 0 || dislikes > 0;
   return (
     <div className="flex-column p-0 border-solid border-1 border-radius-2 border-grey-lt m-4-t">
       <div key={entityId} className="result">
@@ -44,7 +45,7 @@ export default function LikeCard({
             thumbSize={14}
           />
         </div>
-        {(likes > 0 || dislikes > 0) && (
+        {isRated && (
           <LikeDislikeRatio dislikes={dislikes} likes={likes} />
         )}
       </div>

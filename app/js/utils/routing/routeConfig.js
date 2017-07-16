@@ -1,5 +1,5 @@
 import Dashboard from '../../components/Dashboard';
-import SearchPage from '../../components/SearchPage';
+import SearchPageContainer from '../../containers/SearchPageContainer';
 
 import { path } from './routingUtils';
 
@@ -12,7 +12,7 @@ export default [
     path: path(),
   },
   {
-    component: SearchPage,
+    component: SearchPageContainer,
     path: path(Routes.SEARCH),
   },
 ];

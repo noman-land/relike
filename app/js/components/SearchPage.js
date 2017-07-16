@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import ReLikeUtils from 'relike-utils';
 import { Map } from 'immutable';
@@ -13,7 +14,6 @@ export default class SearchPage extends Component {
     super(props, context);
 
     this.state = {
-      accountLoading: true,
       activeAccount: null,
       myRating: 0,
       pendingLikes: Map(),
@@ -173,3 +173,7 @@ export default class SearchPage extends Component {
     );
   }
 }
+
+SearchPage.propTypes = {
+  accountLoading: PropTypes.bool.isRequired,
+};

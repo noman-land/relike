@@ -54,6 +54,7 @@
     "react-dom": "^15.5.4",
     "react-immutable-proptypes": "^2.1.0",
     "react-redux": "^5.0.5",
+    "react-router-config": "^1.0.0-beta.3",
     "react-router-dom": "^4.1.1",
     "redux": "^3.7.2",
     "relike-utils": "^0.1.9",

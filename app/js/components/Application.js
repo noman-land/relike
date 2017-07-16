@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
 
 import rootReducer from '../reducers/rootReducer';
 
-import Dashboard from './Dashboard';
 import Nav from './Nav';
-import SearchPage from './SearchPage';
-
-import { Routes } from '../constants';
-
-import { path } from '../utils/routing/routingUtils';
+import routeConfig from '../utils/routing/routeConfig';
 
 export default class Application extends Component {
   constructor(props, context) {
@@ -25,8 +21,7 @@ export default class Application extends Component {
         <BrowserRouter>
           <div className="flex-column p-4">
             <Nav />
-            <Route exact path={path()} component={Dashboard} />
-            <Route path={path(Routes.SEARCH)} component={SearchPage} />
+            {renderRoutes(routeConfig)}
           </div>
         </BrowserRouter>
       </Provider>

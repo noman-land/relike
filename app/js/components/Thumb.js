@@ -27,7 +27,7 @@ export default function Thumb({
     'fa',
     `fa-thumbs${filledClass}-${direction}`,
     { 'loading-pulsate': pending },
-    { 'text-blue': active },
+    { 'text-blue': (active && !pending) || (!active && pending) },
   ]);
 
   return (

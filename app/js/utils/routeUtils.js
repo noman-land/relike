@@ -1,4 +1,4 @@
-export function path(pathPart) {
+export function path(...pathParts) {
   const SLASH = '/';
-  return !pathPart ? SLASH : `${SLASH}${pathPart}`;
-};
+  return `${SLASH}${pathParts.join(SLASH)}`;
+}

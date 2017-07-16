@@ -9,6 +9,7 @@ export const getLikeCountError = createAction(
 
 export const getLikeCountStart = createAction(
   actionTypes.GET_LIKE_COUNT_START,
+  entityId => ({ entityId }),
 );
 
 export const getLikeCountSuccess = createAction(

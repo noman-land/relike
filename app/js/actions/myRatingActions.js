@@ -9,6 +9,7 @@ export const getMyRatingError = createAction(
 
 export const getMyRatingStart = createAction(
   actionTypes.GET_MY_RATING_START,
+  entityId => ({ entityId }),
 );
 
 export const getMyRatingSuccess = createAction(

@@ -1,16 +1,20 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
+import { path } from '../utils/routeUtils';
+
+import { Routes } from '../constants';
+
 const Nav = () => (
   <nav className="nav">
     <ul className="flex list-style-none p-0 m-0-t">
       <li>
-        <Link to="/">
+        <Link to={path()}>
           Home
         </Link>
       </li>
       <li>
-        <Link to="/search">
+        <Link to={path(Routes.SEARCH)}>
           Search
         </Link>
       </li>

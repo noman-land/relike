@@ -41,3 +41,10 @@ export function getMyRating(entityId) {
     });
   };
 }
+
+export function getLikeData(entityId) {
+  return dispatch => {
+    dispatch(getLikeCount(entityId));
+    dispatch(getMyRating(entityId));
+  };
+}

@@ -13,8 +13,7 @@ export default class SearchPage extends Component {
   static get propTypes() {
     return {
       accountLoading: PropTypes.bool.isRequired,
-      getLikeCount: PropTypes.func.isRequired,
-      getMyRating: PropTypes.func.isRequired,
+      getLikeData: PropTypes.func.isRequired,
       searchResult: PropTypes.shape({
         dislikes: PropTypes.number.isRequired,
         entityId: PropTypes.string.isRequired,
@@ -33,7 +32,6 @@ export default class SearchPage extends Component {
       searchInput: '',
     };
 
-    this.fetchData = this.fetchData.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleDislikeClick = this.handleDislikeClick.bind(this);
     this.handleLikeClick = this.handleLikeClick.bind(this);
@@ -49,7 +47,8 @@ export default class SearchPage extends Component {
   }
 
   componentDidMount() {
-    this.fetchData(this.props.searchResult.entityId);
+    const { getLikeData, searchResult: { entityId } } = this.props;
+    getLikeData(entityId);
   }
 
   isDislikePending() {
@@ -69,24 +68,23 @@ export default class SearchPage extends Component {
   }
 
   onAccountSwitch(activeAccount) {
+    const { getLikeData, searchResult: { entityId } } = this.props;
     this.setState({ activeAccount });
-    this.fetchData(this.props.searchResult.entityId);
+    getLikeData(entityId);
   }
 
   onLikeEvent(entityId) {
     const { pendingLikes } = this.state;
-    const { searchResult: { entityId: currentEntityId } } = this.props;
+    const {
+      getLikeData,
+      searchResult: {
+        entityId: currentEntityId,
+      },
+    } = this.props;
     this.setState({ pendingLikes: pendingLikes.delete(entityId) });
     if (entityId === currentEntityId) {
-      this.fetchData(entityId);
+      getLikeData(entityId);
     }
-  }
-
-  fetchData(entityId) {
-    const { getLikeCount, getMyRating } = this.props;
-
-    getLikeCount(entityId);
-    getMyRating(entityId);
   }
 
   handleInputChange({ target: { value } }) {
@@ -131,7 +129,7 @@ export default class SearchPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.fetchData(this.state.searchInput);
+    this.props.getLikeData(this.state.searchInput);
   }
 
   render() {

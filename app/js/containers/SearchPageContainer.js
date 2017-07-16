@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import SearchPage from '../components/SearchPage';
 
-import { getLikeCount, getMyRating } from '../actions/asyncActions/searchResultAsyncActions';
+import { getLikeData } from '../actions/asyncActions/searchResultAsyncActions';
 
 const mapStateToProps = state => ({
   accountLoading: state.accountLoading,
@@ -10,8 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getLikeCount,
-  getMyRating,
+  getLikeData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);

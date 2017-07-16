@@ -14,8 +14,8 @@ import { Routes } from '../constants';
 import { path } from '../utils/routeUtils';
 
 export default class Application extends Component {
-  constructor() {
-    super();
+  constructor(props, context) {
+    super(props, context);
     this.store = createStore(rootReducer);
   }
 

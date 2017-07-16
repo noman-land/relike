@@ -12,8 +12,6 @@ export default class SearchPage extends Component {
   constructor(props, context) {
     super(props, context);
 
-    window.ReLike = this;
-
     this.state = {
       accountLoading: true,
       activeAccount: null,

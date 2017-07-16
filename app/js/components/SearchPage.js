@@ -14,10 +14,12 @@ export default class SearchPage extends Component {
     return {
       accountLoading: PropTypes.bool.isRequired,
       getLikeCount: PropTypes.func.isRequired,
+      getMyRating: PropTypes.func.isRequired,
       searchResult: PropTypes.shape({
         dislikes: PropTypes.number.isRequired,
         entityId: PropTypes.string.isRequired,
         likes: PropTypes.number.isRequired,
+        myRating: PropTypes.number.isRequired,
       }).isRequired,
     };
   }
@@ -27,19 +29,17 @@ export default class SearchPage extends Component {
 
     this.state = {
       activeAccount: null,
-      myRating: 0,
       pendingLikes: Map(),
       searchInput: '',
     };
 
-    this.fetchDataAndUpdateCard = this.fetchDataAndUpdateCard.bind(this);
+    this.fetchData = this.fetchData.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleDislikeClick = this.handleDislikeClick.bind(this);
     this.handleLikeClick = this.handleLikeClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onAccountSwitch = this.onAccountSwitch.bind(this);
     this.onLikeEvent = this.onLikeEvent.bind(this);
-    this.updateMyRating = this.updateMyRating.bind(this);
 
     // init ReLike
     this.reLikeUtils = new ReLikeUtils({
@@ -49,8 +49,7 @@ export default class SearchPage extends Component {
   }
 
   componentDidMount() {
-    const { getLikeCount, searchResult: { entityId } } = this.props;
-    getLikeCount(entityId);
+    this.fetchData(this.props.searchResult.entityId);
   }
 
   isDislikePending() {
@@ -71,7 +70,7 @@ export default class SearchPage extends Component {
 
   onAccountSwitch(activeAccount) {
     this.setState({ activeAccount });
-    this.fetchDataAndUpdateCard(this.props.searchResult.entityId);
+    this.fetchData(this.props.searchResult.entityId);
   }
 
   onLikeEvent(entityId) {
@@ -79,13 +78,15 @@ export default class SearchPage extends Component {
     const { searchResult: { entityId: currentEntityId } } = this.props;
     this.setState({ pendingLikes: pendingLikes.delete(entityId) });
     if (entityId === currentEntityId) {
-      this.fetchDataAndUpdateCard(entityId);
+      this.fetchData(entityId);
     }
   }
 
-  fetchDataAndUpdateCard(entityId) {
-    this.reLikeUtils.getLikeCount(entityId).then(this.updateLikeCount);
-    this.reLikeUtils.getMyRating(entityId).then(this.updateMyRating);
+  fetchData(entityId) {
+    const { getLikeCount, getMyRating } = this.props;
+
+    getLikeCount(entityId);
+    getMyRating(entityId);
   }
 
   handleInputChange({ target: { value } }) {
@@ -95,8 +96,8 @@ export default class SearchPage extends Component {
   }
 
   handleDislikeClick() {
-    const { myRating, pendingLikes } = this.state;
-    const { searchResult: { entityId } } = this.props;
+    const { pendingLikes } = this.state;
+    const { searchResult: { entityId, myRating } } = this.props;
 
     if (doesDislike(myRating)) {
       this.setState({
@@ -112,8 +113,8 @@ export default class SearchPage extends Component {
   }
 
   handleLikeClick() {
-    const { myRating, pendingLikes } = this.state;
-    const { searchResult: { entityId } } = this.props;
+    const { pendingLikes } = this.state;
+    const { searchResult: { entityId, myRating } } = this.props;
 
     if (doesLike(myRating)) {
       this.setState({
@@ -130,20 +131,12 @@ export default class SearchPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.getLikeCount(this.state.searchInput);
-  }
-
-  updateMyRating(myRating) {
-    this.setState({ myRating });
+    this.fetchData(this.state.searchInput);
   }
 
   render() {
-    const {
-      myRating,
-      searchInput,
-    } = this.state;
-
-    const { searchResult: { dislikes, entityId, likes } } = this.props;
+    const { searchInput } = this.state;
+    const { searchResult: { dislikes, entityId, likes, myRating } } = this.props;
 
     return (
       <div>

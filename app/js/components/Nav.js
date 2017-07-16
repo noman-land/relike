@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-import { path } from '../utils/routeUtils';
+import { path } from '../utils/routing/routingUtils';
 
 import { Routes } from '../constants';
 

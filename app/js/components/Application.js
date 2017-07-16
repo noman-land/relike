@@ -11,7 +11,7 @@ import SearchPage from './SearchPage';
 
 import { Routes } from '../constants';
 
-import { path } from '../utils/routeUtils';
+import { path } from '../utils/routing/routingUtils';
 
 export default class Application extends Component {
   constructor(props, context) {

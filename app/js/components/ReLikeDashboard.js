@@ -8,7 +8,7 @@ import SearchBar from '../components/SearchBar';
 
 import { doesDislike, doesLike } from '../utils/likingUtils';
 
-export default class ReLike extends Component {
+export default class ReLikeDashboard extends Component {
   constructor(props, context) {
     super(props, context);
 

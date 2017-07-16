@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ReLikeApplication from './components/ReLikeApplication';
+import ReLikeDashboard from './components/ReLikeDashboard';
 
 import '../sass/style.sass';
 
@@ -11,6 +11,6 @@ const interval = setInterval(() => {
   if (appContainer === null || !window.web3) return false;
 
   clearInterval(interval);
-  ReactDOM.render(<ReLikeApplication />, appContainer);
+  ReactDOM.render(<ReLikeDashboard />, appContainer);
   return true;
 }, 100);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { applyMiddleware, createStore } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -17,9 +17,14 @@ export default class Application extends Component {
   }
 
   createStore() {
+    /* eslint-disable no-underscore-dangle */
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    /* eslint-enable */
     this.store = createStore(
       rootReducer,
-      applyMiddleware(thunk),
+      composeEnhancers(
+        applyMiddleware(thunk, reLikeMiddleware),
+      ),
     );
   }
 

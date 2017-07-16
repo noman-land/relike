@@ -8,7 +8,7 @@ import SearchBar from '../components/SearchBar';
 
 import { doesDislike, doesLike } from '../utils/likingUtils';
 
-export default class ReLikeDashboard extends Component {
+export default class SearchPage extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -153,7 +153,7 @@ export default class ReLikeDashboard extends Component {
     } = this.state;
 
     return (
-      <div className="flex-column p-4">
+      <div>
         <SearchBar
           onInputChange={this.handleInputChange}
           onSubmit={this.handleSubmit}

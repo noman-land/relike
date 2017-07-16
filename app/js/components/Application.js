@@ -1,10 +1,19 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Route,
+} from 'react-router-dom';
 
-import ReLikeDashboard from './ReLikeDashboard';
+import Dashboard from './Dashboard';
+import Nav from './Nav';
+import SearchPage from './SearchPage';
 
 export default () => (
   <BrowserRouter>
-    <ReLikeDashboard />
+    <div className="flex-column p-4">
+      <Nav />
+      <Route exact path="/" component={Dashboard} />
+      <Route path="/search" component={SearchPage} />
+    </div>
   </BrowserRouter>
 );

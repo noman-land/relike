@@ -10,6 +10,18 @@ import SearchBar from '../components/SearchBar';
 import { doesDislike, doesLike } from '../utils/likingUtils';
 
 export default class SearchPage extends Component {
+  static get propTypes() {
+    return {
+      accountLoading: PropTypes.bool.isRequired,
+      getLikeCount: PropTypes.func.isRequired,
+      searchResult: PropTypes.shape({
+        dislikes: PropTypes.number.isRequired,
+        entityId: PropTypes.string.isRequired,
+        likes: PropTypes.number.isRequired,
+      }).isRequired,
+    };
+  }
+
   constructor(props, context) {
     super(props, context);
 
@@ -17,11 +29,6 @@ export default class SearchPage extends Component {
       activeAccount: null,
       myRating: 0,
       pendingLikes: Map(),
-      result: {
-        dislikes: 0,
-        entityId: 'ReLike',
-        likes: 0,
-      },
       searchInput: '',
     };
 
@@ -32,7 +39,6 @@ export default class SearchPage extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onAccountSwitch = this.onAccountSwitch.bind(this);
     this.onLikeEvent = this.onLikeEvent.bind(this);
-    this.updateLikeCount = this.updateLikeCount.bind(this);
     this.updateMyRating = this.updateMyRating.bind(this);
 
     // init ReLike
@@ -42,15 +48,22 @@ export default class SearchPage extends Component {
     });
   }
 
+  componentDidMount() {
+    const { getLikeCount, searchResult: { entityId } } = this.props;
+    getLikeCount(entityId);
+  }
+
   isDislikePending() {
-    const { pendingLikes, result: { entityId } } = this.state;
+    const { pendingLikes } = this.state;
+    const { searchResult: { entityId } } = this.props;
 
     return !!(pendingLikes.getIn([entityId, 'dislike'])
     || pendingLikes.getIn([entityId, 'unDislike']));
   }
 
   isLikePending() {
-    const { pendingLikes, result: { entityId } } = this.state;
+    const { pendingLikes } = this.state;
+    const { searchResult: { entityId } } = this.props;
 
     return !!(pendingLikes.getIn([entityId, 'like'])
     || pendingLikes.getIn([entityId, 'unLike']));
@@ -58,11 +71,12 @@ export default class SearchPage extends Component {
 
   onAccountSwitch(activeAccount) {
     this.setState({ activeAccount });
-    this.fetchDataAndUpdateCard(this.state.result.entityId);
+    this.fetchDataAndUpdateCard(this.props.searchResult.entityId);
   }
 
   onLikeEvent(entityId) {
-    const { result: { entityId: currentEntityId }, pendingLikes } = this.state;
+    const { pendingLikes } = this.state;
+    const { searchResult: { entityId: currentEntityId } } = this.props;
     this.setState({ pendingLikes: pendingLikes.delete(entityId) });
     if (entityId === currentEntityId) {
       this.fetchDataAndUpdateCard(entityId);
@@ -81,7 +95,8 @@ export default class SearchPage extends Component {
   }
 
   handleDislikeClick() {
-    const { myRating, pendingLikes, result: { entityId } } = this.state;
+    const { myRating, pendingLikes } = this.state;
+    const { searchResult: { entityId } } = this.props;
 
     if (doesDislike(myRating)) {
       this.setState({
@@ -97,7 +112,8 @@ export default class SearchPage extends Component {
   }
 
   handleLikeClick() {
-    const { myRating, pendingLikes, result: { entityId } } = this.state;
+    const { myRating, pendingLikes } = this.state;
+    const { searchResult: { entityId } } = this.props;
 
     if (doesLike(myRating)) {
       this.setState({
@@ -114,25 +130,7 @@ export default class SearchPage extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({
-      result: {
-        ...this.state.result,
-        entityId: this.state.searchInput,
-      },
-    });
-
-    this.fetchDataAndUpdateCard(this.state.searchInput);
-  }
-
-  updateLikeCount({ dislikes, likes }) {
-    console.info('Updating like count', likes, dislikes);
-    this.setState({
-      result: {
-        ...this.state.result,
-        dislikes,
-        likes,
-      },
-    });
+    this.props.getLikeCount(this.state.searchInput);
   }
 
   updateMyRating(myRating) {
@@ -142,13 +140,10 @@ export default class SearchPage extends Component {
   render() {
     const {
       myRating,
-      result: {
-        dislikes,
-        entityId,
-        likes,
-      },
       searchInput,
     } = this.state;
+
+    const { searchResult: { dislikes, entityId, likes } } = this.props;
 
     return (
       <div>
@@ -173,7 +168,3 @@ export default class SearchPage extends Component {
     );
   }
 }
-
-SearchPage.propTypes = {
-  accountLoading: PropTypes.bool.isRequired,
-};

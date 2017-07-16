@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 
-import rootReducer from '../reducers/rootReducer';
+import rootReducer from '../reducers/index';
 
 import Nav from './Nav';
 import routeConfig from '../utils/routing/routeConfig';
@@ -12,7 +13,14 @@ import routeConfig from '../utils/routing/routeConfig';
 export default class Application extends Component {
   constructor(props, context) {
     super(props, context);
-    this.store = createStore(rootReducer);
+    this.createStore();
+  }
+
+  createStore() {
+    this.store = createStore(
+      rootReducer,
+      applyMiddleware(thunk),
+    );
   }
 
   render() {

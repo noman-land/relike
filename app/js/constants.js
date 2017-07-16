@@ -10,7 +10,12 @@ export const Ratings = [
   RatingTypes.DISLIKE,
 ];
 
+export const Routes = {
+  SEARCH: 'search',
+};
+
 export default {
   Ratings,
   RatingTypes,
+  Routes,
 };

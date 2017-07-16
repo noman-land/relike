@@ -9,6 +9,10 @@ import Dashboard from './Dashboard';
 import Nav from './Nav';
 import SearchPage from './SearchPage';
 
+import { Routes } from '../constants';
+
+import { path } from '../utils/routeUtils';
+
 export default class Application extends Component {
   constructor() {
     super();
@@ -21,8 +25,8 @@ export default class Application extends Component {
         <BrowserRouter>
           <div className="flex-column p-4">
             <Nav />
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/search" component={SearchPage} />
+            <Route exact path={path()} component={Dashboard} />
+            <Route path={path(Routes.SEARCH)} component={SearchPage} />
           </div>
         </BrowserRouter>
       </Provider>

@@ -38,7 +38,6 @@ export default class SearchPage extends Component {
     this.handleLikeClick = this.handleLikeClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onAccountSwitch = this.onAccountSwitch.bind(this);
-    this.onLikeEvent = this.onLikeEvent.bind(this);
   }
 
   componentDidMount() {
@@ -64,20 +63,6 @@ export default class SearchPage extends Component {
     const { getLikeData, searchResult: { entityId } } = this.props;
     this.setState({ activeAccount });
     getLikeData(entityId);
-  }
-
-  onLikeEvent(entityId) {
-    const { pendingLikes } = this.state;
-    const {
-      getLikeData,
-      searchResult: {
-        entityId: currentEntityId,
-      },
-    } = this.props;
-    this.setState({ pendingLikes: pendingLikes.delete(entityId) });
-    if (entityId === currentEntityId) {
-      getLikeData(entityId);
-    }
   }
 
   handleInputChange({ target: { value } }) {

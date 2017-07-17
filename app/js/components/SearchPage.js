@@ -10,7 +10,6 @@ import { doesDislike, doesLike } from '../utils/likingUtils';
 export default class SearchPage extends Component {
   static get propTypes() {
     return {
-      accountLoading: PropTypes.bool.isRequired,
       dislike: PropTypes.func.isRequired,
       getLikeData: PropTypes.func.isRequired,
       like: PropTypes.func.isRequired,

@@ -4,7 +4,6 @@ import { ReLikeActions } from 'relike-utils';
 import SearchPage from '../components/SearchPage';
 
 const mapStateToProps = state => ({
-  accountLoading: state.accountLoading,
   pendingLikes: state.pendingLikes,
   searchResult: state.searchResult,
 });

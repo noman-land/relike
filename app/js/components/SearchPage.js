@@ -47,14 +47,14 @@ export default class SearchPage extends Component {
     const { pendingLikes, searchResult: { entityId } } = this.props;
 
     return !!(pendingLikes.getIn([entityId, 'dislike'])
-    || pendingLikes.getIn([entityId, 'unDislike']));
+      || pendingLikes.getIn([entityId, 'unDislike']));
   }
 
   isLikePending() {
     const { pendingLikes, searchResult: { entityId } } = this.props;
 
     return !!(pendingLikes.getIn([entityId, 'like'])
-    || pendingLikes.getIn([entityId, 'unLike']));
+      || pendingLikes.getIn([entityId, 'unLike']));
   }
 
   handleInputChange({ target: { value } }) {

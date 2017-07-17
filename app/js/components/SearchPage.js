@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ReLikeUtils from 'relike-utils';
 import { Map } from 'immutable';
 
 import LikeCard from '../components/LikeCard';
@@ -13,13 +12,17 @@ export default class SearchPage extends Component {
   static get propTypes() {
     return {
       accountLoading: PropTypes.bool.isRequired,
+      dislike: PropTypes.func.isRequired,
       getLikeData: PropTypes.func.isRequired,
+      like: PropTypes.func.isRequired,
       searchResult: PropTypes.shape({
         dislikes: PropTypes.number.isRequired,
         entityId: PropTypes.string.isRequired,
         likes: PropTypes.number.isRequired,
         myRating: PropTypes.number.isRequired,
       }).isRequired,
+      unDislike: PropTypes.func.isRequired,
+      unLike: PropTypes.func.isRequired,
     };
   }
 
@@ -38,12 +41,6 @@ export default class SearchPage extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onAccountSwitch = this.onAccountSwitch.bind(this);
     this.onLikeEvent = this.onLikeEvent.bind(this);
-
-    // init ReLike
-    this.reLikeUtils = new ReLikeUtils({
-      onAccountSwitch: this.onAccountSwitch,
-      onLikeEvent: this.onLikeEvent,
-    });
   }
 
   componentDidMount() {
@@ -95,35 +92,35 @@ export default class SearchPage extends Component {
 
   handleDislikeClick() {
     const { pendingLikes } = this.state;
-    const { searchResult: { entityId, myRating } } = this.props;
+    const { dislike, searchResult: { entityId, myRating }, unDislike } = this.props;
 
     if (doesDislike(myRating)) {
       this.setState({
         pendingLikes: pendingLikes.setIn([entityId, 'unDislike'], true),
       });
-      this.reLikeUtils.unDislike(entityId);
+      unDislike(entityId);
     } else {
       this.setState({
         pendingLikes: pendingLikes.setIn([entityId, 'dislike'], true),
       });
-      this.reLikeUtils.dislike(entityId);
+      dislike(entityId);
     }
   }
 
   handleLikeClick() {
     const { pendingLikes } = this.state;
-    const { searchResult: { entityId, myRating } } = this.props;
+    const { like, searchResult: { entityId, myRating }, unLike } = this.props;
 
     if (doesLike(myRating)) {
       this.setState({
         pendingLikes: pendingLikes.setIn([entityId, 'unLike'], true),
       });
-      this.reLikeUtils.unLike(entityId);
+      unLike(entityId);
     } else {
       this.setState({
         pendingLikes: pendingLikes.setIn([entityId, 'like'], true),
       });
-      this.reLikeUtils.like(entityId);
+      like(entityId);
     }
   }
 

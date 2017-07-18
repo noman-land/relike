@@ -54,15 +54,25 @@ export default class SearchPage extends Component {
   isDislikePending() {
     const { pendingLikes, searchResult: { entityId } } = this.props;
 
-    return !!(pendingLikes.getIn([entityId, 'dislike'])
-      || pendingLikes.getIn([entityId, 'unDislike']));
+    return !!pendingLikes.getIn([entityId, 'dislike']);
   }
 
   isLikePending() {
     const { pendingLikes, searchResult: { entityId } } = this.props;
 
-    return !!(pendingLikes.getIn([entityId, 'like'])
-      || pendingLikes.getIn([entityId, 'unLike']));
+    return !!pendingLikes.getIn([entityId, 'like']);
+  }
+
+  isUnDislikePending() {
+    const { pendingLikes, searchResult: { entityId } } = this.props;
+
+    return !!pendingLikes.getIn([entityId, 'unDislike']);
+  }
+
+  isUnLikePending() {
+    const { pendingLikes, searchResult: { entityId } } = this.props;
+
+    return !!pendingLikes.getIn([entityId, 'unLike']);
   }
 
   handleInputChange({ target: { value } }) {
@@ -121,6 +131,8 @@ export default class SearchPage extends Component {
             entityId={entityId}
             isDislikePending={this.isDislikePending()}
             isLikePending={this.isLikePending()}
+            isUnDislikePending={this.isUnDislikePending()}
+            isUnLikePending={this.isUnLikePending()}
             likes={likes}
             myRating={myRating}
             onDislikeClick={this.handleDislikeClick}

@@ -11,12 +11,45 @@ export default function LikeCard({
   entityId,
   isDislikePending,
   isLikePending,
+  isUnDislikePending,
+  isUnLikePending,
   likes,
   myRating,
   onDislikeClick,
   onLikeClick,
 }) {
   const isRated = likes > 0 || dislikes > 0;
+
+  const isDislikeActive = (doesDislike(myRating) && !isLikePending && !isUnDislikePending)
+    || isDislikePending;
+
+  const isLikeActive = (doesLike(myRating) && !isDislikePending && !isUnLikePending)
+    || isLikePending;
+
+  const dislikesWithPending = (() => {
+    if (isDislikePending) {
+      return dislikes + 1;
+    }
+
+    if (isUnDislikePending || (doesDislike(myRating) && isLikePending)) {
+      return dislikes - 1;
+    }
+
+    return dislikes;
+  })();
+
+  const likesWithPending = (() => {
+    if (isLikePending) {
+      return likes + 1;
+    }
+
+    if (isUnLikePending || (doesLike(myRating) && isDislikePending)) {
+      return likes - 1;
+    }
+
+    return likes;
+  })();
+
   return (
     <div className="flex-column p-0 border-solid border-1 border-radius-2 border-grey-lt m-4-t">
       <div key={entityId} className="result">
@@ -25,28 +58,31 @@ export default function LikeCard({
         </span>
         <div className="flex flex-grow-1 justify-space-between p-4">
           <Thumb
-            active={doesLike(myRating)}
-            count={likes}
+            active={isLikeActive}
+            count={likesWithPending}
             direction={'up'}
             filled={false}
             onClick={onLikeClick}
-            pending={isLikePending}
+            pending={isLikePending || isUnLikePending}
             textSize={8}
             thumbSize={14}
           />
           <Thumb
-            active={doesDislike(myRating)}
-            count={dislikes}
+            active={isDislikeActive}
+            count={dislikesWithPending}
             direction={'down'}
             filled={false}
             onClick={onDislikeClick}
-            pending={isDislikePending}
+            pending={isDislikePending || isUnDislikePending}
             textSize={8}
             thumbSize={14}
           />
         </div>
         {isRated && (
-          <LikeDislikeRatio dislikes={dislikes} likes={likes} />
+          <LikeDislikeRatio
+            dislikes={dislikesWithPending}
+            likes={likesWithPending}
+          />
         )}
       </div>
     </div>
@@ -56,8 +92,10 @@ export default function LikeCard({
 LikeCard.propTypes = {
   dislikes: PropTypes.number.isRequired,
   entityId: PropTypes.string.isRequired,
-  isLikePending: PropTypes.bool.isRequired,
   isDislikePending: PropTypes.bool.isRequired,
+  isLikePending: PropTypes.bool.isRequired,
+  isUnDislikePending: PropTypes.bool.isRequired,
+  isUnLikePending: PropTypes.bool.isRequired,
   likes: PropTypes.number.isRequired,
   myRating: PropTypes.number.isRequired,
   onDislikeClick: PropTypes.func.isRequired,

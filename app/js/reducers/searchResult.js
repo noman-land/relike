@@ -47,7 +47,11 @@ export default function searchResult(state = initialState, action) {
         myRating,
       };
     }
-    case ReLikeActionTypes.DISLIKE_START: {
+    case ReLikeActionTypes.DISLIKE_SUCCESS: {
+      const { meta: { entityId } } = action;
+      if (entityId !== state.entityId) {
+        return state;
+      }
       return {
         ...state,
         dislikes: state.dislikes + 1,
@@ -55,7 +59,11 @@ export default function searchResult(state = initialState, action) {
         myRating: Ratings.indexOf(RatingTypes.DISLIKE),
       };
     }
-    case ReLikeActionTypes.LIKE_START: {
+    case ReLikeActionTypes.LIKE_SUCCESS: {
+      const { meta: { entityId } } = action;
+      if (entityId !== state.entityId) {
+        return state;
+      }
       return {
         ...state,
         dislikes: doesDislike(state.myRating) ? state.dislikes - 1 : state.dislikes,
@@ -74,14 +82,22 @@ export default function searchResult(state = initialState, action) {
         likes,
       };
     }
-    case ReLikeActionTypes.UNDISLIKE_START: {
+    case ReLikeActionTypes.UNDISLIKE_SUCCESS: {
+      const { meta: { entityId } } = action;
+      if (entityId !== state.entityId) {
+        return state;
+      }
       return {
         ...state,
         dislikes: state.dislikes - 1,
         myRating: Ratings.indexOf(RatingTypes.UNRATED),
       };
     }
-    case ReLikeActionTypes.UNLIKE_START: {
+    case ReLikeActionTypes.UNLIKE_SUCCESS: {
+      const { meta: { entityId } } = action;
+      if (entityId !== state.entityId) {
+        return state;
+      }
       return {
         ...state,
         likes: state.likes - 1,

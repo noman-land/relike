@@ -11,7 +11,6 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    // Copy index.html to build folder
     new CopyWebpackPlugin([{
       from: './app/index.html',
       to: 'index.html',

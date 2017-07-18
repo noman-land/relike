@@ -53,25 +53,21 @@ export default class SearchPage extends Component {
 
   isDislikePending() {
     const { pendingLikes, searchResult: { entityId } } = this.props;
-
     return !!pendingLikes.getIn([entityId, 'dislike']);
   }
 
   isLikePending() {
     const { pendingLikes, searchResult: { entityId } } = this.props;
-
     return !!pendingLikes.getIn([entityId, 'like']);
   }
 
   isUnDislikePending() {
     const { pendingLikes, searchResult: { entityId } } = this.props;
-
     return !!pendingLikes.getIn([entityId, 'unDislike']);
   }
 
   isUnLikePending() {
     const { pendingLikes, searchResult: { entityId } } = this.props;
-
     return !!pendingLikes.getIn([entityId, 'unLike']);
   }
 

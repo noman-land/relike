@@ -13,17 +13,22 @@ const initialState = {
 
 export default function searchResult(state = initialState, action) {
   switch (action.type) {
+    case ReLikeActionTypes.GET_LIKE_COUNT_START:
+    case ReLikeActionTypes.GET_MY_RATING_START: {
+      return {
+        ...state,
+        entityId: action.payload.entityId,
+      };
+    }
     case ReLikeActionTypes.GET_LIKE_COUNT_SUCCESS: {
       const {
         meta: { entityId },
-        payload: {
-          result: {
-            dislikes,
-            likes,
-          },
-        },
+        payload: { result: { dislikes, likes } },
       } = action;
 
+      if (entityId !== state.entityId) {
+        return state;
+      }
       return {
         ...state,
         entityId,
@@ -33,17 +38,16 @@ export default function searchResult(state = initialState, action) {
     }
     case ReLikeActionTypes.GET_MY_RATING_SUCCESS: {
       const { meta: { entityId }, payload: { myRating } } = action;
+      if (entityId !== state.entityId) {
+        return state;
+      }
       return {
         ...state,
         entityId,
         myRating,
       };
     }
-    case ReLikeActionTypes.NEW_LIKE: {
-      console.log('new like', action);
-      return state;
-    }
-    case ReLikeActionTypes.DISLIKE_SUCCESS: {
+    case ReLikeActionTypes.DISLIKE_START: {
       return {
         ...state,
         dislikes: state.dislikes + 1,
@@ -51,7 +55,7 @@ export default function searchResult(state = initialState, action) {
         myRating: Ratings.indexOf(RatingTypes.DISLIKE),
       };
     }
-    case ReLikeActionTypes.LIKE_SUCCESS: {
+    case ReLikeActionTypes.LIKE_START: {
       return {
         ...state,
         dislikes: doesDislike(state.myRating) ? state.dislikes - 1 : state.dislikes,
@@ -59,14 +63,14 @@ export default function searchResult(state = initialState, action) {
         myRating: Ratings.indexOf(RatingTypes.LIKE),
       };
     }
-    case ReLikeActionTypes.UNDISLIKE_SUCCESS: {
+    case ReLikeActionTypes.UNDISLIKE_START: {
       return {
         ...state,
         dislikes: state.dislikes - 1,
         myRating: Ratings.indexOf(RatingTypes.UNRATED),
       };
     }
-    case ReLikeActionTypes.UNLIKE_SUCCESS: {
+    case ReLikeActionTypes.UNLIKE_START: {
       return {
         ...state,
         likes: state.likes - 1,

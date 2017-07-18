@@ -4,8 +4,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: './app/js/app.js',
   output: {
-    path: path.resolve(__dirname, 'build'),
     filename: 'app.js',
+    path: path.resolve(__dirname, 'build'),
   },
   devServer: {
     historyApiFallback: true,

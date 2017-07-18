@@ -13,6 +13,18 @@ const initialState = {
 
 export default function searchResult(state = initialState, action) {
   switch (action.type) {
+    case ReLikeActionTypes.DISLIKE_SUCCESS: {
+      const { meta: { entityId } } = action;
+      if (entityId !== state.entityId) {
+        return state;
+      }
+      return {
+        ...state,
+        dislikes: state.dislikes + 1,
+        likes: doesLike(state.myRating) ? state.likes - 1 : state.likes,
+        myRating: Ratings.indexOf(RatingTypes.DISLIKE),
+      };
+    }
     case ReLikeActionTypes.GET_LIKE_COUNT_START:
     case ReLikeActionTypes.GET_MY_RATING_START: {
       return {
@@ -45,18 +57,6 @@ export default function searchResult(state = initialState, action) {
         ...state,
         entityId,
         myRating,
-      };
-    }
-    case ReLikeActionTypes.DISLIKE_SUCCESS: {
-      const { meta: { entityId } } = action;
-      if (entityId !== state.entityId) {
-        return state;
-      }
-      return {
-        ...state,
-        dislikes: state.dislikes + 1,
-        likes: doesLike(state.myRating) ? state.likes - 1 : state.likes,
-        myRating: Ratings.indexOf(RatingTypes.DISLIKE),
       };
     }
     case ReLikeActionTypes.LIKE_SUCCESS: {

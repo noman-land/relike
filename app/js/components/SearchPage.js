@@ -10,6 +10,7 @@ import { doesDislike, doesLike } from '../utils/likingUtils';
 export default class SearchPage extends Component {
   static get propTypes() {
     return {
+      activeAccount: PropTypes.string.isRequired,
       dislike: PropTypes.func.isRequired,
       getLikeData: PropTypes.func.isRequired,
       like: PropTypes.func.isRequired,
@@ -41,6 +42,13 @@ export default class SearchPage extends Component {
   componentDidMount() {
     const { getLikeData, searchResult: { entityId } } = this.props;
     getLikeData(entityId);
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { activeAccount, getLikeData, searchResult: { entityId } } = this.props;
+    if (newProps.activeAccount !== activeAccount) {
+      getLikeData(entityId);
+    }
   }
 
   isDislikePending() {

@@ -71,7 +71,7 @@ export default function searchResult(state = initialState, action) {
         myRating: Ratings.indexOf(RatingTypes.LIKE),
       };
     }
-    case ReLikeActionTypes.NEW_LIKE: {
+    case ReLikeActionTypes.NEW_LIKE_EVENT: {
       const { payload: { dislikes, entityId, likes } } = action;
       if (entityId !== state.entityId) {
         return state;

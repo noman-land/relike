@@ -1,0 +1,23 @@
+@import ../utils/background
+@import ../utils/flexbox
+@import ../utils/display
+@import ../utils/position
+@import ../utils/text
+
+.overlay
+  @extend .align-items-center
+  @extend .bg-white
+  @extend .flex-column
+  @extend .justify-center
+  @extend .opacity-9
+  @extend .position-absolute
+  bottom: 0
+  left: 0
+  right: 0
+  top: 0
+
+  .overlay-message
+    @extend .text-blue-dk
+    @extend .text-size-14
+    @extend .thinner
+    transform: rotate(345deg)

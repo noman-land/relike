@@ -10,7 +10,7 @@ import { doesDislike, doesLike } from '../utils/likingUtils';
 export default class SearchPage extends Component {
   static get propTypes() {
     return {
-      activeAccount: PropTypes.string.isRequired,
+      activeAccount: PropTypes.string,
       dislike: PropTypes.func.isRequired,
       getLikeData: PropTypes.func.isRequired,
       like: PropTypes.func.isRequired,
@@ -23,6 +23,12 @@ export default class SearchPage extends Component {
       }).isRequired,
       unDislike: PropTypes.func.isRequired,
       unLike: PropTypes.func.isRequired,
+    };
+  }
+
+  static get defaultProps() {
+    return {
+      activeAccount: null,
     };
   }
 
@@ -112,7 +118,7 @@ export default class SearchPage extends Component {
 
   render() {
     const { searchInput } = this.state;
-    const { searchResult: { dislikes, entityId, likes, myRating } } = this.props;
+    const { activeAccount, searchResult: { dislikes, entityId, likes, myRating } } = this.props;
 
     return (
       <div>
@@ -123,6 +129,7 @@ export default class SearchPage extends Component {
         />
         {entityId && (
           <LikeCard
+            disabled={!activeAccount}
             dislikes={dislikes}
             entityId={entityId}
             isDislikePending={this.isDislikePending()}

@@ -13,6 +13,7 @@ export default class SearchPage extends Component {
       activeAccount: PropTypes.string,
       dislike: PropTypes.func.isRequired,
       getLikeData: PropTypes.func.isRequired,
+      getMyRating: PropTypes.func.isRequired,
       like: PropTypes.func.isRequired,
       pendingLikes: ImmutablePropTypes.map.isRequired,
       searchResult: PropTypes.shape({
@@ -51,9 +52,9 @@ export default class SearchPage extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const { activeAccount, getLikeData, searchResult: { entityId } } = this.props;
+    const { activeAccount, getMyRating, searchResult: { entityId } } = this.props;
     if (newProps.activeAccount !== activeAccount) {
-      getLikeData(entityId);
+      getMyRating(entityId);
     }
   }
 

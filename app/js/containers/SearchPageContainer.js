@@ -12,6 +12,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   dislike: ReLikeActions.dislike,
   getLikeData: ReLikeActions.getLikeData,
+  getMyRating: ReLikeActions.getMyRating,
   like: ReLikeActions.like,
   unDislike: ReLikeActions.unDislike,
   unLike: ReLikeActions.unLike,

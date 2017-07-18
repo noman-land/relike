@@ -18,11 +18,11 @@ export default function LikeCard({
   onDislikeClick,
   onLikeClick,
 }) {
-  const isDislikeActive = (doesDislike(myRating) && !isLikePending && !isUnDislikePending)
-    || isDislikePending;
+  const isDislikeActive = isDislikePending
+    || (doesDislike(myRating) && !isLikePending && !isUnDislikePending);
 
-  const isLikeActive = (doesLike(myRating) && !isDislikePending && !isUnLikePending)
-    || isLikePending;
+  const isLikeActive = isLikePending
+    || (doesLike(myRating) && !isDislikePending && !isUnLikePending);
 
   const dislikesWithPending = (() => {
     if (isDislikePending) {

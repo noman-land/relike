@@ -60,7 +60,7 @@
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
-    "relike-utils": "^0.2.4",
+    "relike-utils": "^0.2.5",
     "truffle-contract": "^2.0.0",
     "web3": "^0.18.4"
   }

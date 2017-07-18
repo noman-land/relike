@@ -7,26 +7,26 @@ export default function pendingLikes(state = Map(), action) {
     case ReLikeActionTypes.DISLIKE_START:
       return state.setIn([action.payload.entityId, 'dislike'], true);
 
-    case ReLikeActionTypes.LIKE_START:
-      return state.setIn([action.payload.entityId, 'like'], true);
-
-    case ReLikeActionTypes.UNDISLIKE_START:
-      return state.setIn([action.payload.entityId, 'unDislike'], true);
-
-    case ReLikeActionTypes.UNLIKE_START:
-      return state.setIn([action.payload.entityId, 'unLike'], true);
-
     case ReLikeActionTypes.DISLIKE_ERROR:
     case ReLikeActionTypes.DISLIKE_SUCCESS:
       return state.setIn([action.meta.entityId, 'dislike'], false);
+
+    case ReLikeActionTypes.LIKE_START:
+      return state.setIn([action.payload.entityId, 'like'], true);
 
     case ReLikeActionTypes.LIKE_ERROR:
     case ReLikeActionTypes.LIKE_SUCCESS:
       return state.setIn([action.meta.entityId, 'like'], false);
 
+    case ReLikeActionTypes.UNDISLIKE_START:
+      return state.setIn([action.payload.entityId, 'unDislike'], true);
+
     case ReLikeActionTypes.UNDISLIKE_ERROR:
     case ReLikeActionTypes.UNDISLIKE_SUCCESS:
       return state.setIn([action.meta.entityId, 'unDislike'], false);
+
+    case ReLikeActionTypes.UNLIKE_START:
+      return state.setIn([action.payload.entityId, 'unLike'], true);
 
     case ReLikeActionTypes.UNLIKE_ERROR:
     case ReLikeActionTypes.UNLIKE_SUCCESS:

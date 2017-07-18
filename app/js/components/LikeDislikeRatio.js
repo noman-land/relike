@@ -12,7 +12,7 @@ export default function LikeDislikeRatio({ dislikes, likes }) {
       <div style={{ background: 'red', height: '5px', width: `${dislikeWidth}%` }} />
     </div>
   );
-};
+}
 
 LikeDislikeRatio.propTypes = {
   dislikes: PropTypes.number.isRequired,

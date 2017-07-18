@@ -63,6 +63,17 @@ export default function searchResult(state = initialState, action) {
         myRating: Ratings.indexOf(RatingTypes.LIKE),
       };
     }
+    case ReLikeActionTypes.NEW_LIKE: {
+      const { payload: { dislikes, entityId, likes } } = action;
+      if (entityId !== state.entityId) {
+        return state;
+      }
+      return {
+        ...state,
+        dislikes,
+        likes,
+      };
+    }
     case ReLikeActionTypes.UNDISLIKE_START: {
       return {
         ...state,

@@ -18,8 +18,6 @@ export default function LikeCard({
   onDislikeClick,
   onLikeClick,
 }) {
-  const isRated = likes > 0 || dislikes > 0;
-
   const isDislikeActive = (doesDislike(myRating) && !isLikePending && !isUnDislikePending)
     || isDislikePending;
 
@@ -49,6 +47,8 @@ export default function LikeCard({
 
     return likes;
   })();
+
+  const isRated = likesWithPending > 0 || dislikesWithPending > 0;
 
   return (
     <div className="flex-column p-0 border-solid border-1 border-radius-2 border-grey-lt m-4-t">

@@ -119,7 +119,10 @@ export default class SearchPage extends Component {
 
   render() {
     const { searchInput } = this.state;
-    const { activeAccount, searchResult: { dislikes, entityId, likes, myRating } } = this.props;
+    const {
+      activeAccount,
+      searchResult: { dislikes, entityId, likes, myRating },
+    } = this.props;
 
     return (
       <div>

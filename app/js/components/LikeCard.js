@@ -19,37 +19,7 @@ export default function LikeCard({
   onDislikeClick,
   onLikeClick,
 }) {
-  const isDislikeActive = isDislikePending
-    || (doesDislike(myRating) && !isLikePending && !isUnDislikePending);
-
-  const isLikeActive = isLikePending
-    || (doesLike(myRating) && !isDislikePending && !isUnLikePending);
-
-  const dislikesWithPending = (() => {
-    if (isDislikePending) {
-      return dislikes + 1;
-    }
-
-    if (isUnDislikePending || (doesDislike(myRating) && isLikePending)) {
-      return dislikes - 1;
-    }
-
-    return dislikes;
-  })();
-
-  const likesWithPending = (() => {
-    if (isLikePending) {
-      return likes + 1;
-    }
-
-    if (isUnLikePending || (doesLike(myRating) && isDislikePending)) {
-      return likes - 1;
-    }
-
-    return likes;
-  })();
-
-  const isRated = likesWithPending > 0 || dislikesWithPending > 0;
+  const isRated = likes > 0 || dislikes > 0;
 
   return (
     <div className="flex-column p-0 border-solid border-1 border-radius-2 border-grey-lt m-4-t">
@@ -67,8 +37,8 @@ export default function LikeCard({
         </span>
         <div className="flex flex-grow-1 justify-space-between p-4">
           <Thumb
-            active={isLikeActive}
-            count={likesWithPending}
+            active={doesLike(myRating)}
+            count={likes}
             direction={'up'}
             disabled={disabled}
             filled={false}
@@ -78,8 +48,8 @@ export default function LikeCard({
             thumbSize={14}
           />
           <Thumb
-            active={isDislikeActive}
-            count={dislikesWithPending}
+            active={doesDislike(myRating)}
+            count={dislikes}
             direction={'down'}
             disabled={disabled}
             filled={false}
@@ -91,8 +61,8 @@ export default function LikeCard({
         </div>
         {isRated && (
           <LikeDislikeRatio
-            dislikes={dislikesWithPending}
-            likes={likesWithPending}
+            dislikes={dislikes}
+            likes={likes}
           />
         )}
       </div>

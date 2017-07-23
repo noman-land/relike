@@ -61,6 +61,7 @@
     "redux-actions": "^2.2.1",
     "redux-thunk": "^2.2.0",
     "relike-utils": "^0.2.5",
+    "reselect": "^3.0.1",
     "truffle-contract": "^2.0.0",
     "web3": "^0.18.4"
   }

@@ -1,11 +1,5 @@
-export function getActiveAccount(state) {
-  return state.activeAccount;
-}
+export const getActiveAccount = state => state.activeAccount;
 
-export function getPendingLikes(state) {
-  return state.pendingLikes;
-}
+export const getPendingLikes = state => state.pendingLikes;
 
-export function getSearchResult(state) {
-  return state.searchResult;
-}
+export const getSearchResult = state => state.searchResult;

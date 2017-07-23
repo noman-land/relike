@@ -3,11 +3,12 @@ import { ReLikeActions } from 'relike-utils';
 
 import SearchPage from '../components/SearchPage';
 
+import { getActiveAccount, getPendingLikes } from '../selectors/coreSelectors';
 import { getSearchResultWithPending } from '../selectors/searchResultSelectors';
 
 const mapStateToProps = state => ({
-  activeAccount: state.activeAccount,
-  pendingLikes: state.pendingLikes,
+  activeAccount: getActiveAccount(state),
+  pendingLikes: getPendingLikes(state),
   searchResult: getSearchResultWithPending(state),
 });
 

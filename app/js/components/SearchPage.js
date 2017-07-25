@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { ReLikeActionTypes } from 'relike-utils';
 
-import LikeCard from '../components/LikeCard';
+import LikeCardContainer from '../containers/LikeCardContainer';
 import SearchBar from '../components/SearchBar';
 
 import { doesDislike, doesLike } from '../utils/likingUtils';
@@ -16,7 +14,6 @@ export default class SearchPage extends Component {
       getLikeData: PropTypes.func.isRequired,
       getMyRating: PropTypes.func.isRequired,
       like: PropTypes.func.isRequired,
-      pendingLikes: ImmutablePropTypes.map.isRequired,
       searchResult: PropTypes.shape({
         dislikes: PropTypes.number.isRequired,
         entityId: PropTypes.string.isRequired,
@@ -57,17 +54,6 @@ export default class SearchPage extends Component {
     if (newProps.activeAccount !== activeAccount) {
       getMyRating(entityId);
     }
-  }
-
-  isPending(actionType) {
-    const { pendingLikes, searchResult: { entityId } } = this.props;
-    const pendingLikesForEntity = pendingLikes.get(entityId);
-
-    if (!pendingLikesForEntity) {
-      return false;
-    }
-
-    return pendingLikesForEntity.some(action => action.type === actionType);
   }
 
   handleInputChange({ target: { value } }) {
@@ -111,17 +97,7 @@ export default class SearchPage extends Component {
 
   render() {
     const { searchInput } = this.state;
-    const {
-      activeAccount,
-      searchResult: { dislikes, entityId, likes, myRating },
-    } = this.props;
-
-    const {
-      DISLIKE_SUCCESS,
-      LIKE_SUCCESS,
-      UNDISLIKE_SUCCESS,
-      UNLIKE_SUCCESS,
-    } = ReLikeActionTypes;
+    const { searchResult: { entityId } } = this.props;
 
     return (
       <div>
@@ -131,16 +107,7 @@ export default class SearchPage extends Component {
           searchInput={searchInput}
         />
         {entityId && (
-          <LikeCard
-            disabled={!activeAccount}
-            dislikes={dislikes}
-            entityId={entityId}
-            isDislikePending={this.isPending(DISLIKE_SUCCESS)}
-            isLikePending={this.isPending(LIKE_SUCCESS)}
-            isUnDislikePending={this.isPending(UNDISLIKE_SUCCESS)}
-            isUnLikePending={this.isPending(UNLIKE_SUCCESS)}
-            likes={likes}
-            myRating={myRating}
+          <LikeCardContainer
             onDislikeClick={this.handleDislikeClick}
             onLikeClick={this.handleLikeClick}
           />

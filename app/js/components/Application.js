@@ -15,6 +15,7 @@ export default class Application extends Component {
   constructor(props, context) {
     super(props, context);
     this.createStore();
+    window.ReLike = this;
   }
 
   createStore() {

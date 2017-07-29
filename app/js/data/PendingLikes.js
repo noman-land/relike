@@ -1,6 +1,6 @@
 import { List, Map, Record } from 'immutable';
 
-import { ReLikeActions, ReLikeActionTypes } from 'relike-utils';
+import { ReLikeActions, ReLikeActionTypes } from 'relike-redux-middleware';
 
 const {
   dislikeActions: { dislikeSuccess },

@@ -1,4 +1,4 @@
-import { ReLikeActionTypes } from 'relike-utils';
+import { ReLikeActionTypes } from 'relike-redux-middleware';
 
 import { Ratings, RatingTypes } from '../constants';
 

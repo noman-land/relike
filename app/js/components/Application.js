@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
-import { ReLikeMiddleware } from 'relike-utils';
+import ReLikeMiddleware from 'relike-redux-middleware';
 
 import rootReducer from '../reducers/index';
 

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { ReLikeActions } from 'relike-utils';
+import { ReLikeActions } from 'relike-redux-middleware';
 
 import LikeCard from '../components/LikeCard';
 

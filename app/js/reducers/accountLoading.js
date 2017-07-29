@@ -1,4 +1,4 @@
-import { ReLikeActionTypes } from 'relike-utils';
+import { ReLikeActionTypes } from 'relike-redux-middleware';
 
 export default function accountLoading(state = true, action) {
   switch (action.type) {

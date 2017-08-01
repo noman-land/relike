@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 
 import activeAccount from './activeAccount';
 import accountLoading from './accountLoading';
@@ -10,4 +11,5 @@ export default combineReducers({
   accountLoading,
   pendingLikes,
   searchResult,
+  router: routerReducer,
 });
